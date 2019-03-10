@@ -88,7 +88,7 @@ public:
 
         checkOther.checkThirdArgument();
         checkOther.checkHiddenChannel();
-        // checkOther.CheckMemoryFree();
+        checkOther.CheckMemoryFree();
         //checkOther.CheckMemoryInit();
         checkOther.checkFive();
     }
@@ -280,7 +280,7 @@ private:
     void commaSeparatedReturnError(const Token *tok);
     void ThirdParamError(const Token *tok, const std::string &varnames);
     void HiddenChannelError(const Token *tok);
-    // void CheckMemoryFreeError(const Token *tok, const std::string& varname);
+    void CheckMemoryFreeError(const Token *tok, const std::string& varname);
     //void CheckMemoryInitError(const Token *tok);
     // void OutofBoundError(const Token *tok);
     void DangerFunctionError(const Token *tok);

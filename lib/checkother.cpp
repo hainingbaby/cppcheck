@@ -1164,34 +1164,34 @@ void CheckOther::HiddenChannelError(const Token *tok)
 }
 
 /** check memleak alloc but no free ,@hainingbaby */
-// void CheckOther::CheckMemoryFree(){
-//     const SymbolDatabase *symbolDatabase = mTokenizer->getSymbolDatabase();
-//     for(const Scope * scope : symbolDatabase->functionScopes){
-//         for(const  Token *tok = scope->bodyStart->next(); tok != scope->bodyEnd; tok = tok->next()){
-//             if(tok->varId() > 0 && Token::Match(tok, "%any% = kzalloc|alloc|kmalloc|allocate (")){
-//                 int flag = 0;
-//                 const unsigned int allocID = tok->varId();
-//                 for(const Token *toktmp = tok; toktmp != scope->bodyEnd; toktmp = toktmp->next()){
-//                     if(Token::Match(toktmp, "kfree|dealloc|deallocated|free ( ")){
-//                         if(Token::Match(toktmp->next()->link()->previous(),"%varid%", allocID)){
-//                             flag = 1;
-//                             break;
-//                         }
-//                     }
-//                 }
-//                 if(!flag)
-//                     CheckMemoryFreeError(tok, tok->str());
-//             }
-//         }
-//     }
-// }
+void CheckOther::CheckMemoryFree(){
+    const SymbolDatabase *symbolDatabase = mTokenizer->getSymbolDatabase();
+    for(const Scope * scope : symbolDatabase->functionScopes){
+        for(const  Token *tok = scope->bodyStart->next(); tok != scope->bodyEnd; tok = tok->next()){
+            if(tok->varId() > 0 && Token::Match(tok, "%any% = kzalloc|alloc|kmalloc|allocate (")){
+                int flag = 0;
+                const unsigned int allocID = tok->varId();
+                for(const Token *toktmp = tok; toktmp != scope->bodyEnd; toktmp = toktmp->next()){
+                    if(Token::Match(toktmp, "kfree|dealloc|deallocated|free ( ")){
+                        if(Token::Match(toktmp->next()->link()->previous(),"%varid%", allocID)){
+                            flag = 1;
+                            break;
+                        }
+                    }
+                }
+                if(!flag)
+                    CheckMemoryFreeError(tok, tok->str());
+            }
+        }
+    }
+}
 
-// void CheckOther::CheckMemoryFreeError(const Token *tok, const std::string &varname){
-//     reportError(tok,
-//         Severity::error, 
-//         "MemoryNoFree", 
-//         "The ' " + varname + " ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.",CWE(0U),false);
-// }
+void CheckOther::CheckMemoryFreeError(const Token *tok, const std::string &varname){
+    reportError(tok,
+        Severity::error, 
+        "MemoryNoFree", 
+        "The ' " + varname + " ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.",CWE(0U),false);
+}
 
 //check alloc but no initial.
 
