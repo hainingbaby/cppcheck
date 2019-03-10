@@ -551,7 +551,7 @@ void CheckBufferOverrun::checkFunctionCall(const Token *tok, const ArrayInfo &ar
     if (callstack.size() >= 2)
         return;
 
-    // Prevent recursion
+    // Prevent recursion by travel stack
     for (std::list<const Token*>::const_iterator it = callstack.cbegin(); it != callstack.cend(); ++it) {
         // Same function name => bail out
         if (tok->str() == (*it)->str())
