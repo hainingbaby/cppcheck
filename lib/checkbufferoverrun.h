@@ -74,6 +74,7 @@ public:
     }
 
     void runSimplifiedChecks(const Tokenizer *tokenizer, const Settings *settings, ErrorLogger *errorLogger) OVERRIDE {
+        //cout<<"run simplify"<<endl;
         CheckBufferOverrun checkBufferOverrun(tokenizer, settings, errorLogger);
         checkBufferOverrun.checkGlobalAndLocalVariable();
         if (tokenizer && tokenizer->isMaxTime())
@@ -86,6 +87,7 @@ public:
     }
 
     void runChecks(const Tokenizer *tokenizer, const Settings *settings, ErrorLogger *errorLogger) OVERRIDE {
+        // cout<<"run check"<<endl;
         CheckBufferOverrun checkBufferOverrun(tokenizer, settings, errorLogger);
         checkBufferOverrun.bufferOverrun();
         checkBufferOverrun.checkStringArgument();

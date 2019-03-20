@@ -34,26 +34,30 @@ class Token;
 class TokenList;
 class Variable;
 
+/* std::pair<first,second> 将两类数据合在一起，当函数需要返回两个数据时可以使用,调用时，pair.first || pair.second.
+ * std::list<type> 双向链表，不支持快速随机访问，list.push_front(e)添加元素到list开头，list.push_back(e)添加到结尾.
+ * explicit 只对构造函数有效，用来抑制隐式转换，避免出现容易造成误解的隐式类型转换错误.
+ * 2019/03/12 @haining
+ */
 namespace ValueFlow {
     class CPPCHECKLIB Value {
     public:
         typedef std::pair<const Token *, std::string> ErrorPathItem;
         typedef std::list<ErrorPathItem> ErrorPath;
-
         explicit Value(long long val = 0)
             : valueType(INT),
               intvalue(val),
               tokvalue(nullptr),
               floatValue(0.0),
-              moveKind(NonMovedVariable),
+              moveKind(NonMovedVariable),   // NonMovedVariable, MovedVariable, ForwardedVariable
               varvalue(val),
-              condition(nullptr),
+              condition(nullptr),    //condition为值所依赖的条件
               varId(0U),
-              conditional(false),
-              defaultArg(false),
-              lifetimeKind(Object),
-              lifetimeScope(Local),
-              valueKind(ValueKind::Possible)
+              conditional(false),    //conditional value.
+              defaultArg(false),    //此值是否作为默认参数传递给函数
+              lifetimeKind(Object),  // Object, Lambda, Iterator
+              lifetimeScope(Local),  //  Local, Argument 
+              valueKind(ValueKind::Possible)  // ValueKind::Possible, ValueKind::Known, ValueKind::Inconclusive
         {}
         Value(const Token *c, long long val);
 

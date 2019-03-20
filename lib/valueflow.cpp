@@ -134,6 +134,7 @@ namespace {
             return values.find(varid) != values.end();
         }
 
+        // 交换两个map的内容
         void swap(ProgramMemory &pm) {
             values.swap(pm.values);
         }
@@ -142,6 +143,7 @@ namespace {
             values.clear();
         }
 
+        //std::map.empty()是bool类型, std::map.erase() std::map.clear()是void类型
         bool empty() const {
             return values.empty();
         }
@@ -1186,10 +1188,12 @@ static void valueFlowBitAnd(TokenList *tokenlist)
 
 static void valueFlowSameExpressions(TokenList *tokenlist)
 {
+    // tok 不是known类型，且左右操作符均存在.
     for (Token *tok = tokenlist->front(); tok; tok = tok->next()) {
         if (tok->hasKnownValue())
             continue;
 
+        // 如果tok的左右操作符
         if (!tok->astOperand1() || !tok->astOperand2())
             continue;
 
@@ -5054,6 +5058,7 @@ void ValueFlow::setValues(TokenList *tokenlist, SymbolDatabase* symboldatabase, 
     valueFlowFwdAnalysis(tokenlist, settings);
 
     // Temporary hack.. run valueflow until there is nothing to update or timeout expires
+    // 这也太鸡肋了叭。
     const std::time_t timeout = std::time(0) + TIMEOUT;
     std::size_t values = 0;
     while (std::time(0) < timeout && values < getTotalValues(tokenlist)) {

@@ -39,7 +39,7 @@
 #include <sstream>
 #include <stack>
 #include <utility>
-
+#include <iostream>
 //---------------------------------------------------------------------------
 
 // Register this check class (by creating a static instance of it)
@@ -86,6 +86,7 @@ void CheckBufferOverrun::arrayIndexOutOfBoundsError(const Token *tok, const Arra
 {
     bool inconclusive = false;
     const Token *condition = nullptr;
+    //遍历数据流中的值,condition为值所依赖的条件
     for (std::size_t i = 0; i < index.size(); ++i) {
         inconclusive |= index[i].isInconclusive();
         if (condition == nullptr)
@@ -1244,6 +1245,7 @@ void CheckBufferOverrun::checkGlobalAndLocalVariable()
 
             // size : Max array index
             MathLib::bigint size = 0;
+            MathLib::bigint size_two = 0;
 
             // nextTok : used to skip to next statement.
             const Token * nextTok = tok;
@@ -1257,6 +1259,7 @@ void CheckBufferOverrun::checkGlobalAndLocalVariable()
 
             // varid : The variable id for the array
             const Variable *var = tok->next()->variable();
+            // tok->next()->variable() : return variable or nullptr. @haining
             // FIXME: This is an ugly fix for a crash. The SymbolDatabase
             // should create the variable.
             if (!var)
@@ -1267,8 +1270,14 @@ void CheckBufferOverrun::checkGlobalAndLocalVariable()
                 if (tok->astOperand2() == nullptr || tok->astOperand2()->getMaxValue(false) == nullptr)
                     continue;
                 size = tok->astOperand2()->getMaxValue(false)->intvalue;
+                // here : intvalue? ()
                 nextTok = tok->link()->next();
-                if (size < 0) {
+                if(Token::Match(nextTok,"["))
+                    size_two = nextTok->astOperand2()->getMaxValue(false)->intvalue;
+                // std::cout << "size2 = " << size_two<< std::endl;
+                if (size < 0 || size_two < 0) {
+                    // int a[-3][10] : first args is negative , report error. now it's available 
+                    // for 2 domension @haining
                     negativeMemoryAllocationSizeError(tok);
                 }
             } else if (mTokenizer->isCPP() && Token::Match(tok, "[*;{}] %var% = new %type% (|;")) {
