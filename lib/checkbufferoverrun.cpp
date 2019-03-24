@@ -580,6 +580,7 @@ void CheckBufferOverrun::checkFunctionCall(const Token *tok, const ArrayInfo &ar
 void CheckBufferOverrun::checkScope(const Token *tok, const std::vector<const std::string*> &varname, const ArrayInfo &arrayInfo)
 {
     const MathLib::bigint size = arrayInfo.num(0);
+    // std::cout<<"array size = "<<arrayInfo.num(1);<<std::endl;
     if (size <= 0)  // unknown size
         return;
 
@@ -591,6 +592,7 @@ void CheckBufferOverrun::checkScope(const Token *tok, const std::vector<const st
 
     const bool printInconclusive = mSettings->inconclusive;
     const MathLib::bigint total_size = arrayInfo.element_size() * size;
+    // std::cout<< total_size <<std::endl; if 80,then output 40
     const unsigned int declarationId = arrayInfo.declarationId();
 
     std::string varnames;
@@ -839,6 +841,7 @@ void CheckBufferOverrun::valueFlowCheckArrayIndex(const Token * const tok, const
     const bool addressOf = isAddressOf(tok);
 
     // Look for errors first
+    std::cout<<"run valueFlowCheckArrayIndex"<<std::endl;
     for (int warn = 0; warn == 0 || warn == 1; ++warn) {
         // Negative index..
         for (const Token *tok2 = tok; tok2 && tok2->str() == "["; tok2 = tok2->link()->next()) {
@@ -862,9 +865,11 @@ void CheckBufferOverrun::valueFlowCheckArrayIndex(const Token * const tok, const
 
         // total number of elements of array..
         const MathLib::bigint totalElements = arrayInfo.numberOfElements();
+        std::cout<<"run for ......"<<std::endl;
 
-        // total index..
+        // total index max access ..
         const MathLib::bigint totalIndex = arrayInfo.totalIndex(indexes);
+        std::cout<<"totalIndex = "<<totalIndex<<std::endl;
 
         // totalElements <= 0 => Unknown size
         if (totalElements <= 0)
@@ -1196,7 +1201,6 @@ void CheckBufferOverrun::checkGlobalAndLocalVariable()
                     std::vector<MathLib::bigint> indexes2(indexes.size());
                     for (unsigned int i = 0; i < indexes.size(); ++i)
                         indexes2[i] = indexes[i].intvalue;
-
                     arrayIndexOutOfBoundsError(callstack, arrayInfo, indexes2);
                 }
             }
@@ -1270,6 +1274,7 @@ void CheckBufferOverrun::checkGlobalAndLocalVariable()
                 if (tok->astOperand2() == nullptr || tok->astOperand2()->getMaxValue(false) == nullptr)
                     continue;
                 size = tok->astOperand2()->getMaxValue(false)->intvalue;
+                //std::cout<<"size = "<<size<<std::endl;
                 // here : intvalue? ()
                 nextTok = tok->link()->next();
                 if(Token::Match(nextTok,"["))
