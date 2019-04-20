@@ -141,9 +141,9 @@ void CheckLeakAutoVar::configurationInfo(const Token* tok, const std::string &fu
 void CheckLeakAutoVar::doubleFreeError(const Token *tok, const std::string &varname, int type)
 {
     if (mSettings->library.isresource(type))
-        reportError(tok, Severity::error, "doubleFree", "$symbol:" + varname + "\nResource handle '$symbol' freed twice.", CWE415, false);
+        reportError(tok, Severity::error, "DOUBLE_FREE", "$symbol:" + varname + "\nResource handle '$symbol' freed twice.", CWE415, false);
     else
-        reportError(tok, Severity::error, "doubleFree", "$symbol:" + varname + "\nMemory pointed to by '$symbol' is freed twice.", CWE415, false);
+        reportError(tok, Severity::error, "DOUBLE_FREE", "$symbol:" + varname + "\nMemory pointed to by '$symbol' is freed twice.", CWE415, false);
 }
 
 

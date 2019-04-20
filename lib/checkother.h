@@ -278,7 +278,7 @@ private:
     void incompleteArrayFillError(const Token* tok, const std::string& buffer, const std::string& function, bool boolean);
     void varFuncNullUBError(const Token *tok);
     void commaSeparatedReturnError(const Token *tok);
-    void ThirdParamError(const Token *tok, const std::string &varnames);
+    void ThirdParamError(const Token *tok);
     void HiddenChannelError(const Token *tok);
     void CheckMemoryFreeError(const Token *tok, const std::string& varname);
     //void CheckMemoryInitError(const Token *tok);

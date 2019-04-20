@@ -1082,9 +1082,9 @@ void CheckOther::checkThirdArgument()
                 const unsigned int tpID = thirdparam->varId();
                 if(tpID == 0U)
                     continue;
-                for(const Token *atoken = thirdparam->tokAt(-36); atoken!=tok; atoken = atoken->next()){
-                    if(Token::Match(atoken, "if|IRDA_ASSERT (")){
-                        for(const Token *nowiftok = atoken; nowiftok != atoken->next()->link(); nowiftok = nowiftok->next()){
+                for(const Token *scopestart = scope->bodyStart; scopestart!=tok; scopestart = scopestart->next()){
+                    if(Token::Match(scopestart, "if|IRDA_ASSERT|assert (")){
+                        for(const Token *nowiftok = scopestart; nowiftok != scopestart->next()->link(); nowiftok = nowiftok->next()){
                             if(Token::Match(nowiftok, " %any% <|<=|>|>=|== %varid%", tpID)||
                                 Token::Match(nowiftok, " (|%oror% %varid% <|<=|>|>=|== %any%", tpID)||
                                 Token::Match(nowiftok, " %varid% .|-> %any% <|<=|>|>=|== %any% ", tpID)||
@@ -1092,24 +1092,23 @@ void CheckOther::checkThirdArgument()
                                 flag = 1;
                                 break;
                             }
-                            // else
-                            //     continue;
                         }
                     }
-                    // else
-                    //     continue;
+                    // if(Token::Match(scopestart, "%var% = %any% %op% %any% %op% %any% %op% %varid% ", tpID)||
+                    //     Token::Match(atoken, "%var% = %varid% %op% ",tpID))
+                    //     printf("find !!!!!!!!!!!!\n");
                 }
                 if(!flag)
-                    ThirdParamError(thirdparam, thirdparam->str());
+                    ThirdParamError(thirdparam);
             }
         }
     }
 }
 
-void CheckOther::ThirdParamError(const Token *tok, const std::string &varnames)
+void CheckOther::ThirdParamError(const Token *tok)
 {
-    const std::string errmsg = "BufferOverFlow. The third parameter: '" +varnames + "' should clarify its lenth to avoid problems";
-    reportError(tok, Severity::error, "ThirdParamLackConditions", errmsg, CWE398, false);
+    const std::string errmsg = "BufferOverFlow. The third parameter: '" + tok->str() + "' should clarify its lenth to avoid problems";
+    reportError(tok, Severity::error, "BUFFER_OVERFLOW", errmsg, CWE398, false);
 }
 
 //---------------------------------------------------------------------------
@@ -1245,27 +1244,27 @@ void CheckOther::checkFive(){
             //     if(!outofboundflag)
             //         OutofBoundError(tok);
             // }
-            if(Token::Match(tok,"strcmp|gets|strcat|strcpy (")){
-                DangerFunctionError(tok);
-            }
+            // if(Token::Match(tok,"strcmp|gets|strcat|strcpy (")){
+            //     DangerFunctionError(tok);
+            // }
             if(Token::Match(tok,"b43err|fprintf|printf|sprintf ( %name% , %name% ) ;")||
                 Token::Match(tok,"b43err|fprintf|printf|sprintf ( %name% .|-> %name% , %name% ) ;")){
                 unFormatStringError(tok);
             }
-            if(Token::Match(tok,"fopen (")){
-                int fileopflag = 0;
-                // printf("find fopen..\n");
-                // const Token *btok = tok->tokAt(2);
-                const unsigned int fileopId = tok->tokAt(2)->varId();
-                for(const Token *another = tok; another != scope->bodyEnd; another = another->next()){
-                    if(Token::Match(another, "fclose ( %varid%",fileopId)){
-                        fileopflag = 1;
-                        break;
-                    }
-                }
-                if(!fileopflag)
-                    FileOpError(tok);
-            }
+            // if(Token::Match(tok,"fopen (")){
+            //     int fileopflag = 0;
+            //     // printf("find fopen..\n");
+            //     // const Token *btok = tok->tokAt(2);
+            //     const unsigned int fileopId = tok->tokAt(2)->varId();
+            //     for(const Token *another = tok; another != scope->bodyEnd; another = another->next()){
+            //         if(Token::Match(another, "fclose ( %varid%",fileopId)){
+            //             fileopflag = 1;
+            //             break;
+            //         }
+            //     }
+            //     if(!fileopflag)
+            //         FileOpError(tok);
+            // }
         }
     }
 }
@@ -1284,7 +1283,7 @@ void CheckOther::DangerFunctionError(const Token *tok){
 void CheckOther::unFormatStringError(const Token *tok){
     reportError(tok,
         Severity::error,
-        "FormatStringError",
+        "FormatString",
         tok->str() + " : Do not specify the format allowing a possible format string vulnerability",CWE(0U),false);  
 }
 void CheckOther::FileOpError(const Token *tok){

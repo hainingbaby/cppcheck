@@ -592,9 +592,9 @@ void CheckBufferOverrun::checkScope(const Token *tok, const std::vector<const st
 
     const bool printInconclusive = mSettings->inconclusive;
     const MathLib::bigint total_size = arrayInfo.element_size() * size;
-    // std::cout<< total_size <<std::endl; if 80,then output 40
+    // std::cout<< total_size <<std::endl; 
     const unsigned int declarationId = arrayInfo.declarationId();
-
+// ##########test varnames
     std::string varnames;
     for (std::size_t i = 0; i < varname.size(); ++i)
         varnames += (i == 0 ? "" : " . ") + *varname[i];
@@ -841,7 +841,6 @@ void CheckBufferOverrun::valueFlowCheckArrayIndex(const Token * const tok, const
     const bool addressOf = isAddressOf(tok);
 
     // Look for errors first
-    std::cout<<"run valueFlowCheckArrayIndex"<<std::endl;
     for (int warn = 0; warn == 0 || warn == 1; ++warn) {
         // Negative index..
         for (const Token *tok2 = tok; tok2 && tok2->str() == "["; tok2 = tok2->link()->next()) {
@@ -865,11 +864,9 @@ void CheckBufferOverrun::valueFlowCheckArrayIndex(const Token * const tok, const
 
         // total number of elements of array..
         const MathLib::bigint totalElements = arrayInfo.numberOfElements();
-        std::cout<<"run for ......"<<std::endl;
 
         // total index max access ..
         const MathLib::bigint totalIndex = arrayInfo.totalIndex(indexes);
-        std::cout<<"totalIndex = "<<totalIndex<<std::endl;
 
         // totalElements <= 0 => Unknown size
         if (totalElements <= 0)
@@ -1263,7 +1260,7 @@ void CheckBufferOverrun::checkGlobalAndLocalVariable()
 
             // varid : The variable id for the array
             const Variable *var = tok->next()->variable();
-            // tok->next()->variable() : return variable or nullptr. @haining
+            // treturn a pointer to the variable associated with this token
             // FIXME: This is an ugly fix for a crash. The SymbolDatabase
             // should create the variable.
             if (!var)
@@ -1288,7 +1285,7 @@ void CheckBufferOverrun::checkGlobalAndLocalVariable()
             } else if (mTokenizer->isCPP() && Token::Match(tok, "[*;{}] %var% = new %type% (|;")) {
                 size = 1;
                 tok = tok->tokAt(5);
-                if (tok->str() == ";")
+                if (tok->str() == ";")  //int * var = new int(10) || int *var = new int;
                     nextTok = tok->next();
                 else
                     nextTok = tok->link()->next();
