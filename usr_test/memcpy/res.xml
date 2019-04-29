@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results version="2">
+    <cppcheck version="1.88 dev"/>
+    <errors>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;pcmd&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;pcmd&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="arcmsr_hba.c" line="1670"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;user_len&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;user_len&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="arcmsr_hba.c" line="2784"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; buf1 &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; buf1 &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file="arcmsr_hba.c" line="2051"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;key&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;key&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="cfg80211.c" line="1739"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;key&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;key&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="cfg80211.c" line="2265"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;ssid_ie&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;ssid_ie&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="cfg80211.c" line="4439"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;settings&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;settings&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="cfg80211.c" line="4443"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; req &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; req &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file="cfg80211.c" line="3164"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; vif &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; vif &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file="cfg80211.c" line="5208"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; conf &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; conf &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file="cfg80211.c" line="5750"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; extra_buf &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; extra_buf &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file="cfg80211.c" line="5753"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; nd &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; nd &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file="cfg80211.c" line="5756"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; nd_info &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; nd_info &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file="cfg80211.c" line="5759"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; escan_buf &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; escan_buf &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file="cfg80211.c" line="5764"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;ssid_ie&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;ssid_ie&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="haha.c" line="74"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;settings&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;settings&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="haha.c" line="78"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;name_len&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;name_len&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="iriap.c" line="673"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;attr_len&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;attr_len&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="iriap.c" line="680"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; self &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; self &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file="iriap.c" line="182"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;ssid_ie&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;ssid_ie&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="ssid_ie_len.c" line="246"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;settings&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;settings&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="ssid_ie_len.c" line="250"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;cmd&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;cmd&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="ttusbdecfe.c" line="160"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; state &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; state &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file="ttusbdecfe.c" line="213"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; state &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; state &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file="ttusbdecfe.c" line="233"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; command_info &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; command_info &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file="whiteheat.c" line="287"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; info &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; info &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file="whiteheat.c" line="339"/>
+        </error>
+    </errors>
+</results>

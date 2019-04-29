@@ -1038,23 +1038,52 @@ void CheckOther::variableScopeError(const Token *tok, const std::string &varname
 // ########## memcpy(temp,"string", argument)
 // lack of condition for lenth of argument
 //---------------------------------------------------------------------------
+/*
+for (const Function &constructor : classScope->functionList) {
+        if (constructor.isConstructor()) {
+            for (std::size_t argnr = 0U; argnr < constructor.argCount(); argnr++) {
+                const Variable * const argVar = constructor.getArgumentVar(argnr);
+                if (argVar && argVar->isReference()) {
+                    return true;
+                }
+            }
+        }
+    }
+ */
+// 函数传递关系可以在findfunction的测试例中发现
+//
 void CheckOther::checkThirdArgument()
 {
     const SymbolDatabase *symboldatabase = mTokenizer->getSymbolDatabase();
     const Token *thirdparam = nullptr;
+    // // there, functionScopes represent every such as : 'int main()'
+    // const Function* func = symboldatabase->findFunction();
+    // for(const Scope * const scope : symboldatabase->functionScopes){
+    //     const Function* func = scope->findFunction();
+    //     for(const Token *memcpy = scope->bodyStart; memcpy != scope->bodyEnd; memcpy = memcpy->next()){
+    //         if(Token::Match(memcpy,"memcpy (")){
+    //             const Function* func = symboldatabase->findFunction(memcpy);
+    //             // printf("%s\n",func->name().c_str());
+    //             // printf("hahahahaha\n");
+    //             printf("%d\n",func->argCount());
+    //             // const Variable* demov = func->getArgumentVar(3);
+    //             // printf("%s\n",demov->name().c_str());
+    //         }
+    //     }
+    // }
     for(const Scope * const scope : symboldatabase->functionScopes){
-        for(const Token *tok = scope->bodyStart; tok != scope->bodyEnd; tok = tok->next()){
-            // printf(tok->str().c_str());
-            if(Token::Match(tok, "memcpy ( %any% , %any% ,")){
-                thirdparam = tok->tokAt(6);
+        for(const Token *memcpytok = scope->bodyStart; memcpytok != scope->bodyEnd; memcpytok = memcpytok->next()){
+            // printf(memcpytok->str().c_str());
+            if(Token::Match(memcpytok, "memcpy ( %any% , %any% ,")){
+                thirdparam = memcpytok->tokAt(6);
                 // printf(thirdparam->str().c_str());
             }
-            else if(Token::Match(tok, "memcpy ( %any% , %any% .|->|%op% %any% ,")){
-                thirdparam = tok->tokAt(8);
+            else if(Token::Match(memcpytok, "memcpy ( %any% , %any% .|->|%op% %any% ,")){
+                thirdparam = memcpytok->tokAt(8);
                 // printf(thirdparam->str().c_str());x
             }
-            else if(Token::Match(tok, "memcpy ( %op% %any% [ %any% ] , %any% .|-> %any% ,")){
-                thirdparam = tok->tokAt(12);
+            else if(Token::Match(memcpytok, "memcpy ( %op% %any% [ %any% ] , %any% .|-> %any% ,")){
+                thirdparam = memcpytok->tokAt(12);
                 // printf("find....\n");
             }
             // else if(Token::Match(tok, "memcpy ( %op% %any% [ %any% ] , %any% ,")){
@@ -1069,8 +1098,9 @@ void CheckOther::checkThirdArgument()
             //     thirdparam = tok->tokAt(8);
                 // printf(thirdparam->str().c_str());
             // }
-            else if(Token::Match(tok, "memcpy ( %any% .|-> %any% , %any% .|-> %any% ,")){
-                thirdparam = tok->tokAt(10);
+            else if(Token::Match(memcpytok, "memcpy ( %any% .|-> %any% , %any% .|-> %any% ,")){
+                thirdparam = memcpytok->tokAt(10);
+                // printf("simple %s\n",thirdparam->name().c_str());
                 // printf(thirdparam->str().c_str());
             }
             else
@@ -1079,24 +1109,38 @@ void CheckOther::checkThirdArgument()
             if(thirdparam){
 
                 int flag = 0;
-                const unsigned int tpID = thirdparam->varId();
+                unsigned int tpID = thirdparam->varId();
+                unsigned int jianjieID = thirdparam->varId();
+                // const Variable *realthird = symboldatabase->getVariableFromVarId(tpID);
+                // printf("realthird  %s\n",realthird->name().c_str());
+                // if(realthird->isArgument())
+                //     printf("is arg.....\n");
                 if(tpID == 0U)
                     continue;
-                for(const Token *scopestart = scope->bodyStart; scopestart!=tok; scopestart = scopestart->next()){
-                    if(Token::Match(scopestart, "if|IRDA_ASSERT|assert (")){
-                        for(const Token *nowiftok = scopestart; nowiftok != scopestart->next()->link(); nowiftok = nowiftok->next()){
-                            if(Token::Match(nowiftok, " %any% <|<=|>|>=|== %varid%", tpID)||
-                                Token::Match(nowiftok, " (|%oror% %varid% <|<=|>|>=|== %any%", tpID)||
-                                Token::Match(nowiftok, " %varid% .|-> %any% <|<=|>|>=|== %any% ", tpID)||
-                                Token::Match(nowiftok, " %varid% .|-> %any% %op% %any% <|<=|>|>=|== %any% ", tpID)){
+                // search if-condition fromls
+                //  scope start
+                for(const Token *scopetok = scope->bodyStart; scopetok!=memcpytok; scopetok = scopetok->next()){
+                    if(Token::Match(scopetok, "%var% = %any% %op% %any%| %op%| %any%| %op%| %varid%  %op%|", tpID)){
+                        jianjieID = scopetok->varId();
+                    }
+                    if(Token::Match(scopetok, "if|IRDA_ASSERT|assert (")){
+                        for(const Token *nowiftok = scopetok; nowiftok != scopetok->next()->link(); nowiftok = nowiftok->next()){
+                            if(Token::Match(nowiftok, " %any% %comp% %varid% .|->| ", tpID)||
+                                Token::Match(nowiftok, " %varid% %comp% %any%", tpID)||
+                                Token::Match(nowiftok, " %varid% .|-> %any% %op%| %any%| %comp% %any% ", tpID)){
+                                flag = 1;
+                                break;
+                            }
+                            if(jianjieID == 0U)
+                                continue;
+                            if(Token::Match(nowiftok, " %any% %comp% %varid% .|->| ", jianjieID)||
+                                Token::Match(nowiftok, " %varid% %comp% %any%", jianjieID)||
+                                Token::Match(nowiftok, " %varid% .|-> %any% %op%| %any%| %comp% %any% ", jianjieID)){
                                 flag = 1;
                                 break;
                             }
                         }
                     }
-                    // if(Token::Match(scopestart, "%var% = %any% %op% %any% %op% %any% %op% %varid% ", tpID)||
-                    //     Token::Match(atoken, "%var% = %varid% %op% ",tpID))
-                    //     printf("find !!!!!!!!!!!!\n");
                 }
                 if(!flag)
                     ThirdParamError(thirdparam);
@@ -1104,6 +1148,7 @@ void CheckOther::checkThirdArgument()
         }
     }
 }
+
 
 void CheckOther::ThirdParamError(const Token *tok)
 {
