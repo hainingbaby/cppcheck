@@ -86,6 +86,7 @@ public:
         checkOther.checkComparePointers();
         checkOther.checkIncompleteStatement();
 
+        checkOther.checkBufferIndexofParam();
         checkOther.checkThirdArgument();
         checkOther.checkHiddenChannel();
         checkOther.CheckMemoryFree();
@@ -130,6 +131,9 @@ public:
 
     /** @brief %Check for comma separated statements in return */
     void checkCommaSeparatedReturn();
+
+    /** @brief %Check buffer[date]-->datecondtion not full */
+    void checkBufferIndexofParam();
 
     /** @brief %Check memorycpy's third param*/
     void checkThirdArgument();
@@ -278,6 +282,7 @@ private:
     void incompleteArrayFillError(const Token* tok, const std::string& buffer, const std::string& function, bool boolean);
     void varFuncNullUBError(const Token *tok);
     void commaSeparatedReturnError(const Token *tok);
+    void BufferAccessIndexError(const Token *tok);
     void ThirdParamError(const Token *tok);
     void HiddenChannelError(const Token *tok);
     void CheckMemoryFreeError(const Token *tok, const std::string& varname);

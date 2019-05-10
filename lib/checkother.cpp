@@ -1052,6 +1052,65 @@ for (const Function &constructor : classScope->functionList) {
  */
 // 函数传递关系可以在findfunction的测试例中发现
 //
+void CheckOther::checkBufferIndexofParam()
+{
+    //only 1 dims array @haining
+    const SymbolDatabase *symboldatabase = mTokenizer->getSymbolDatabase();
+    for(const Scope * const scope : symboldatabase->functionScopes){
+        for(const Token *arraytok = scope->bodyStart; arraytok != scope->bodyEnd; arraytok = arraytok->next()){
+            if(Token::Match(arraytok,"%type% %var% [ %num% ] = ")){
+                arraytok = arraytok->tokAt(1);
+                unsigned int arrayID = arraytok->varId();
+                // printf("array %s and id : %d\n",arraytok->str().c_str(),arrayID);
+                const std::size_t size = MathLib::toLongNumber(arraytok->strAt(2));
+                for(const Token *paramtok = arraytok;paramtok != scope->bodyEnd; paramtok = paramtok->next()){
+                    if(Token::Match(paramtok->tokAt(-2),"%varid% [ %var% ",arrayID)){
+                        // look for condition for param. @haining
+                        // TODO: add date[var]-->var.getMaxValue()-->done 
+                        // distiguish < & <=
+                        // add function call msg.
+                        const std::size_t paramID  = paramtok->varId();
+                        std::size_t maxnum = 0;
+                        bool issufficient = false;
+                        if(paramtok->getMaxValue(false)){
+                            maxnum = paramtok->getMaxValue(false)->intvalue;
+                            // printf("maxvalue : %d\n",maxnum);
+                            issufficient = true;
+                        }
+                        for(const Token *iftok = scope->bodyStart; iftok != paramtok; iftok = iftok->next()){
+                            if(Token::Match(iftok,"if|IRDA_ASSERT|assert ( %num% >|>= %varid%",paramID)){
+                                maxnum = MathLib::toLongNumber(iftok->strAt(2)) - 1;
+                                issufficient = true;
+                            }
+                            else if(Token::Match(iftok,"if|IRDA_ASSERT|assert ( %varid% <|<= %num%",paramID)){
+                                maxnum = MathLib::toLongNumber(iftok->strAt(4)) - 1;
+                                issufficient = true;
+                            }
+                            else if(Token::Match(iftok,"if|IRDA_ASSERT|assert ( %num% <|<= %varid% <|<= %num%",paramID)){
+                                maxnum = MathLib::toLongNumber(iftok->strAt(6)) - 1;
+                                issufficient = true;
+                            }
+                            else if(Token::Match(iftok,"if|IRDA_ASSERT|assert ( %varid% >|>= %num% && %varid% <|<= %num%",paramID)){
+                                maxnum = MathLib::toLongNumber(iftok->strAt(8)) - 1;
+                                // printf("param and maxnumber is : %d\n",maxnum);
+                                issufficient = true;
+                            }
+                        }
+                        if(size <= maxnum || !issufficient)
+                            BufferAccessIndexError(paramtok->tokAt(-2));
+                    }
+                }
+            }
+        }
+    }
+}
+
+void CheckOther::BufferAccessIndexError(const Token *tok)
+{
+    const std::string errmsg = "BufferOverFlow. Array '" + tok->str() + "' maybe OutofBounds.";
+    reportError(tok, Severity::error, "BUFFER_OVERFLOW", errmsg, CWE398, false);
+}
+
 void CheckOther::checkThirdArgument()
 {
     const SymbolDatabase *symboldatabase = mTokenizer->getSymbolDatabase();

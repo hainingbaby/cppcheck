@@ -288,7 +288,7 @@ man/cppcheck.1:	$(MAN_SOURCE)
 tags:
 	ctags -R --exclude=doxyoutput --exclude=test/cfg --exclude=test/synthetic cli externals gui lib test
 
-install: cppcheck
+install: 
 	install -d ${BIN}
 	install cppcheck ${BIN}
 	install addons/*.py ${BIN}

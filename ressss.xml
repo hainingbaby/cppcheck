@@ -1,0 +1,26 @@
+[usr_test/memcpy/arcmsr_hba.c:1670]: (error) BufferOverFlow. The third parameter: 'pcmd' should clarify its lenth to avoid problems
+[usr_test/memcpy/arcmsr_hba.c:2784]: (error) BufferOverFlow. The third parameter: 'user_len' should clarify its lenth to avoid problems
+[usr_test/memcpy/arcmsr_hba.c:2051]: (error) The ' buf1 ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.
+[usr_test/memcpy/cfg80211.c:1739]: (error) BufferOverFlow. The third parameter: 'key' should clarify its lenth to avoid problems
+[usr_test/memcpy/cfg80211.c:2265]: (error) BufferOverFlow. The third parameter: 'key' should clarify its lenth to avoid problems
+[usr_test/memcpy/cfg80211.c:4439]: (error) BufferOverFlow. The third parameter: 'ssid_ie' should clarify its lenth to avoid problems
+[usr_test/memcpy/cfg80211.c:4443]: (error) BufferOverFlow. The third parameter: 'settings' should clarify its lenth to avoid problems
+[usr_test/memcpy/cfg80211.c:3164]: (error) The ' req ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.
+[usr_test/memcpy/cfg80211.c:5208]: (error) The ' vif ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.
+[usr_test/memcpy/cfg80211.c:5750]: (error) The ' conf ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.
+[usr_test/memcpy/cfg80211.c:5753]: (error) The ' extra_buf ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.
+[usr_test/memcpy/cfg80211.c:5756]: (error) The ' nd ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.
+[usr_test/memcpy/cfg80211.c:5759]: (error) The ' nd_info ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.
+[usr_test/memcpy/cfg80211.c:5764]: (error) The ' escan_buf ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.
+[usr_test/memcpy/haha.c:74]: (error) BufferOverFlow. The third parameter: 'ssid_ie' should clarify its lenth to avoid problems
+[usr_test/memcpy/haha.c:78]: (error) BufferOverFlow. The third parameter: 'settings' should clarify its lenth to avoid problems
+[usr_test/memcpy/iriap.c:673]: (error) BufferOverFlow. The third parameter: 'name_len' should clarify its lenth to avoid problems
+[usr_test/memcpy/iriap.c:680]: (error) BufferOverFlow. The third parameter: 'attr_len' should clarify its lenth to avoid problems
+[usr_test/memcpy/iriap.c:182]: (error) The ' self ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.
+[usr_test/memcpy/ssid_ie_len.c:246]: (error) BufferOverFlow. The third parameter: 'ssid_ie' should clarify its lenth to avoid problems
+[usr_test/memcpy/ssid_ie_len.c:250]: (error) BufferOverFlow. The third parameter: 'settings' should clarify its lenth to avoid problems
+[usr_test/memcpy/ttusbdecfe.c:160]: (error) BufferOverFlow. The third parameter: 'cmd' should clarify its lenth to avoid problems
+[usr_test/memcpy/ttusbdecfe.c:213]: (error) The ' state ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.
+[usr_test/memcpy/ttusbdecfe.c:233]: (error) The ' state ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.
+[usr_test/memcpy/whiteheat.c:287]: (error) The ' command_info ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.
+[usr_test/memcpy/whiteheat.c:339]: (error) The ' info ' has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.
