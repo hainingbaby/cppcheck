@@ -191,12 +191,12 @@ void CheckBufferOverrun::bufferOverrunError(const std::list<const Token *> &call
 void CheckBufferOverrun::possibleBufferOverrunError(const Token *tok, const std::string &src, const std::string &dst, bool cat)
 {
     if (cat)
-        reportError(tok, Severity::warning, "possibleBufferAccessOutOfBounds",
+        reportError(tok, Severity::error, "possibleBufferAccessOutOfBounds",
                     "Possible buffer overflow if strlen(" + src + ") is larger than sizeof(" + dst + ")-strlen(" + dst +").\n"
                     "Possible buffer overflow if strlen(" + src + ") is larger than sizeof(" + dst + ")-strlen(" + dst +"). "
                     "The source buffer is larger than the destination buffer so there is the potential for overflowing the destination buffer.", CWE398, false);
     else
-        reportError(tok, Severity::warning, "possibleBufferAccessOutOfBounds",
+        reportError(tok, Severity::error, "possibleBufferAccessOutOfBounds",
                     "Possible buffer overflow if strlen(" + src + ") is larger than or equal to sizeof(" + dst + ").\n"
                     "Possible buffer overflow if strlen(" + src + ") is larger than or equal to sizeof(" + dst + "). "
                     "The source buffer is larger than the destination buffer so there is the potential for overflowing the destination buffer.", CWE398, false);
@@ -207,7 +207,7 @@ void CheckBufferOverrun::strncatUsageError(const Token *tok)
     if (mSettings && !mSettings->isEnabled(Settings::WARNING))
         return;
 
-    reportError(tok, Severity::warning, "strncatUsage",
+    reportError(tok, Severity::error, "strncatUsage",
                 "Dangerous usage of strncat - 3rd parameter is the maximum number of characters to append.\n"
                 "At most, strncat appends the 3rd parameter's amount of characters and adds a terminating null byte.\n"
                 "The safe way to use strncat is to subtract one from the remaining space in the buffer and use it as 3rd parameter."
@@ -501,7 +501,8 @@ void CheckBufferOverrun::checkFunctionParameter(const Token &ftok, unsigned int 
                             callstack2.push_back(ftok2);
 
                             const std::vector<MathLib::bigint> indexes(1, index);
-                            std::cout<<"checkFunctionParameter error....."<<std::endl;
+                            // ######
+                            // std::cout<<"checkFunctionParameter error....."<<std::endl;
                             arrayIndexOutOfBoundsError(callstack2, arrayInfo, indexes);
                         }
                     }
@@ -643,7 +644,6 @@ void CheckBufferOverrun::checkScope(const Token *tok, const std::vector<const st
         }
 
         // Array index..
-        printf("declarationId : %d\n",declarationId);
         if ((declarationId > 0 && ((tok->str() == "return" || (!tok->isName() && !Token::Match(tok, "[.&]"))) && Token::Match(tok->next(), "%varid% [", declarationId))) ||
             (declarationId == 0 && ((tok->str() == "return" || (!tok->isName() && !Token::Match(tok, "[.&]"))) && (Token::Match(tok->next(), (varnames + " [").c_str()) || Token::Match(tok->next(), (*varname[0] +" [ %num% ] . " + *varname[1] + " [ %num% ]").c_str()))))) {
             std::vector<MathLib::bigint> indexes;

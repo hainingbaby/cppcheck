@@ -32,6 +32,7 @@
 #include "tokenize.h"
 #include "utils.h"
 
+#include<iostream>
 #include <algorithm> // find_if()
 #include <list>
 #include <map>
@@ -1052,11 +1053,47 @@ for (const Function &constructor : classScope->functionList) {
  */
 // 函数传递关系可以在findfunction的测试例中发现
 //
+std::vector<const Function *> findFunctionRefer(const Token *tok){
+    // make sure this is a function call
+    const Token *end = tok->linkAt(1);
+    if (!end)
+        return nullptr;
+
+    std::vector<const Token *> arguments;
+
+    // find all the arguments for this function call
+    for (const Token *arg = tok->tokAt(2); arg && arg != end; arg = arg->nextArgument()) {
+        arguments.push_back(arg);
+    }
+
+    std::vector<const Function *> matches;
+
+    // find all the possible functions that could match
+    const std::size_t args = arguments.size();
+    for (std::multimap<std::string, const Function *>::const_iterator it = functionMap.find(tok->str()); it != functionMap.cend() && it->first == tok->str(); ++it) {
+        const Function *func = it->second;
+        if (args == func->argCount() ||
+            (func->isVariadic() && args >= (func->argCount() - 1)) ||
+            (args < func->argCount() && args >= func->minArgCount())) {
+            matches.push_back(func);
+        }
+    }
+    return matches;
+}
+
 void CheckOther::checkBufferIndexofParam()
 {
-    //only 1 dims array @haining
-    const SymbolDatabase *symboldatabase = mTokenizer->getSymbolDatabase();
-    for(const Scope * const scope : symboldatabase->functionScopes){
+    // only 1 dims array 
+    // 检测 int date[10] = {0}型的数组下标溢出. 
+    // last update at: 2019/05/23 @hainingbaby
+    // 
+    const SymbolDatabase *symboldatabase = mTokenizer->getSymbolDatabase();  
+    // for (std::list<Scope>::const_iterator ascope = symboldatabase->scopeList.begin(); ascope != symboldatabase->scopeList.end(); ++ascope) {
+    //     for (std::list<Function>::const_iterator func = ascope->functionList.begin(); func != ascope->functionList.end(); ++func){
+    //         std::cout << func->name() << " ";
+    //     }
+    // }
+    for(const Scope * scope : symboldatabase->functionScopes){
         for(const Token *arraytok = scope->bodyStart; arraytok != scope->bodyEnd; arraytok = arraytok->next()){
             if(Token::Match(arraytok,"%type% %var% [ %num% ] = ")){
                 arraytok = arraytok->tokAt(1);
@@ -1070,14 +1107,18 @@ void CheckOther::checkBufferIndexofParam()
                         // distiguish < & <=
                         // add function call msg.
                         const std::size_t paramID  = paramtok->varId();
+                        // printf("paramID : %d\n",paramID);
                         std::size_t maxnum = 0;
                         bool issufficient = false;
                         if(paramtok->getMaxValue(false)){
-                            maxnum = paramtok->getMaxValue(false)->intvalue;
-                            // printf("maxvalue : %d\n",maxnum);
+                            maxnum =paramtok->getMaxValue(false)->intvalue;
+                            std::cout<<paramtok->str()<< " : false maxvalue : " << maxnum<<std::endl;
+                            // issufficient represent condition is good in formatting
                             issufficient = true;
                         }
                         for(const Token *iftok = scope->bodyStart; iftok != paramtok; iftok = iftok->next()){
+                            if(issufficient && maxnum > 0)
+                                break;
                             if(Token::Match(iftok,"if|IRDA_ASSERT|assert ( %num% >|>= %varid%",paramID)){
                                 maxnum = MathLib::toLongNumber(iftok->strAt(2)) - 1;
                                 issufficient = true;
@@ -1094,6 +1135,60 @@ void CheckOther::checkBufferIndexofParam()
                                 maxnum = MathLib::toLongNumber(iftok->strAt(8)) - 1;
                                 // printf("param and maxnumber is : %d\n",maxnum);
                                 issufficient = true;
+                            }
+                        }
+                        if(!issufficient){
+                            // look up function Arguments to find if exits the index parameter record position.
+                            const Variable * paramvar = symboldatabase->getVariableFromVarId(paramID);
+                            const Function * function = scope->function;
+                            if (function && function->argCount() > 0 && paramtok->variable()->isArgument()){
+                                // pos: argument position,default 1 ?
+                                // if param is arg of fuc,it must can be found. so defined here. -->not Thoughtful
+                                std::size_t pos = 0;  
+                                // pos < function->argCount()+1
+                                for(const Token *argtok = function->tokenDef->next(); argtok != function->tokenDef->next()->link(); argtok = argtok->next()){
+                                    if(arraytok->str() == ",")
+                                        pos ++;
+                                    if(argtok->str() == paramtok->str()){
+                                        break;
+                                    }
+                                    // argtok = argtok->nextArgument(); 
+                                }
+                                // make sure there exit a function call.
+                                if(symboldatabase->findFunction(function->tokenDef)->name() == scope->className){
+                                    // for(const Scope * thatscope : symboldatabase->functionScopes){
+
+                                    // }
+                                    // for(const Scope * tmpscope : symboldatabase->scopeList){
+                                    //     for(Scope thatscope = scope->findInNestedList(function->name()).begin(); thatscope!= scope->findInNestedList(function->name()).end();++thatscope){
+                                    //         std::cout <<"haha : "<< thatscope->className <<std::endl;
+                                    //     }
+                                    // }
+                                    const Scope * relatedscope = scope;
+                                    std::vector<Scope >::iterator relatedscope = scope;
+                                    while(relatedscope != symboldatabase->functionScopes.end()){
+                                        ++relatedscope;
+                                        for(const Token *tmptok = (*relatedscope).bodyStart; arraytok != (*relatedscope).bodyEnd; tmptok = tmptok->next()){
+                                            if(!Token::Match(tmptok,"%type% %name% (",) && tmptok->function() && tmptok->str() == function->name())
+                                                std::cout << tmptok->str() << "(" << tmptok->strAt(2) <<std::endl;
+                                        }
+
+                                    }
+                                    std::cout<<" find reference: "<<symboldatabase->findFunction(function->token)->name();
+                                    std::cout<<" ( " << symboldatabase->findFunction(function->token)->token->tokAt(2)->str()<< std::endl;
+                                    const Variable * relatedvar = symboldatabase->findFunction(function->tokenDef)->getArgumentVar(pos);
+                                    // const Variable * relatedvar = function->getArgumentVar(pos);
+                                    std::cout<<"var : "<< relatedvar->nameToken()->str() << std::endl;
+                                    if(relatedvar->nameToken()->getMaxValue(false)){
+                                        maxnum = relatedvar->nameToken()->getMaxValue(false)->intvalue;
+                                        std::cout<<"max value of it is : "<< maxnum << std::endl;
+                                    }
+                                    else{
+                                        std::cout<< "No value find."<<std::endl;
+                                        BufferAccessIndexError(paramtok->tokAt(-2));
+                                    }
+                                }
+                                // printf("%s is arg of function %s\n",indexvar->name().c_str(),function->name().c_str());
                             }
                         }
                         if(size <= maxnum || !issufficient)
