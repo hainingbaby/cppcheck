@@ -1039,48 +1039,62 @@ void CheckOther::variableScopeError(const Token *tok, const std::string &varname
 // ########## memcpy(temp,"string", argument)
 // lack of condition for lenth of argument
 //---------------------------------------------------------------------------
-/*
-for (const Function &constructor : classScope->functionList) {
-        if (constructor.isConstructor()) {
-            for (std::size_t argnr = 0U; argnr < constructor.argCount(); argnr++) {
-                const Variable * const argVar = constructor.getArgumentVar(argnr);
-                if (argVar && argVar->isReference()) {
-                    return true;
-                }
-            }
-        }
-    }
- */
 // 函数传递关系可以在findfunction的测试例中发现
-//
-std::vector<const Function *> findFunctionRefer(const Token *tok){
+
+/* this function is used to find all function call for function: tok()
+ * return function calls token list.
+ * @hainingbaby 2019/05/26
+ */
+const std::vector<const Token * > CheckOther::findFunctionCall(const Token *tok){
+    // std::cout<<"run..........."<<std::endl;
+    const SymbolDatabase *symboldatabase = mTokenizer->getSymbolDatabase(); 
     // make sure this is a function call
     const Token *end = tok->linkAt(1);
     if (!end)
-        return nullptr;
+        return {nullptr};
+        // broken function call. return nullptr;
 
     std::vector<const Token *> arguments;
+    std::vector<const Token *> retcalls;
 
     // find all the arguments for this function call
     for (const Token *arg = tok->tokAt(2); arg && arg != end; arg = arg->nextArgument()) {
         arguments.push_back(arg);
     }
 
-    std::vector<const Function *> matches;
+    // std::vector<const Scope * > matches;
 
     // find all the possible functions that could match
     const std::size_t args = arguments.size();
-    for (std::multimap<std::string, const Function *>::const_iterator it = functionMap.find(tok->str()); it != functionMap.cend() && it->first == tok->str(); ++it) {
-        const Function *func = it->second;
-        if (args == func->argCount() ||
-            (func->isVariadic() && args >= (func->argCount() - 1)) ||
-            (args < func->argCount() && args >= func->minArgCount())) {
-            matches.push_back(func);
+    for(const Scope * scope : symboldatabase->functionScopes){
+        for(const Token *thattok = scope->bodyStart; thattok != scope->bodyEnd; thattok = thattok->next()){
+            // first match norms，then detail args.
+            if(thattok->tokType() == Token::eFunction && thattok->str()==tok->str() && !Token::Match(thattok->next(), "( %type% ")){
+                const Function *func = thattok->function();
+                if (args == func->argCount() ||(func->isVariadic() && args >= (func->argCount() - 1)) ||(args < func->argCount() && args >= func->minArgCount())) {
+                    retcalls.push_back(thattok);
+                    // std::cout<<"---->"<< thattok->str() << " ( " << thattok->strAt(2) << std::endl;
+                    // matches.push_back(thattok->scope());
+                }
+            }
         }
     }
+    return retcalls;
+    //for debug, return scopelist that function call exits, when necessary.
+    /*
+    for(std::vector<const Scope *>::const_iterator it = matches.begin(); it!= matches.end(); it++){
+        // const Scope * s = *it;
+        std::cout << (*it)->className <<" " << std::endl;
+    }
     return matches;
+    */
 }
+// void GetfunctionParamTok(const Token * func, std::size_t pos){
+//     const Token *end = tok->linkAt(1);
+//     if (!end)
+//         return nullptr;
 
+// }
 void CheckOther::checkBufferIndexofParam()
 {
     // only 1 dims array 
@@ -1141,6 +1155,7 @@ void CheckOther::checkBufferIndexofParam()
                             // look up function Arguments to find if exits the index parameter record position.
                             const Variable * paramvar = symboldatabase->getVariableFromVarId(paramID);
                             const Function * function = scope->function;
+                            const Token * thatparam;
                             if (function && function->argCount() > 0 && paramtok->variable()->isArgument()){
                                 // pos: argument position,default 1 ?
                                 // if param is arg of fuc,it must can be found. so defined here. -->not Thoughtful
@@ -1156,23 +1171,22 @@ void CheckOther::checkBufferIndexofParam()
                                 }
                                 // make sure there exit a function call.
                                 if(symboldatabase->findFunction(function->tokenDef)->name() == scope->className){
-                                    // for(const Scope * thatscope : symboldatabase->functionScopes){
 
-                                    // }
-                                    // for(const Scope * tmpscope : symboldatabase->scopeList){
-                                    //     for(Scope thatscope = scope->findInNestedList(function->name()).begin(); thatscope!= scope->findInNestedList(function->name()).end();++thatscope){
-                                    //         std::cout <<"haha : "<< thatscope->className <<std::endl;
-                                    //     }
-                                    // }
-                                    const Scope * relatedscope = scope;
-                                    std::vector<Scope >::iterator relatedscope = scope;
-                                    while(relatedscope != symboldatabase->functionScopes.end()){
-                                        ++relatedscope;
-                                        for(const Token *tmptok = (*relatedscope).bodyStart; arraytok != (*relatedscope).bodyEnd; tmptok = tmptok->next()){
-                                            if(!Token::Match(tmptok,"%type% %name% (",) && tmptok->function() && tmptok->str() == function->name())
-                                                std::cout << tmptok->str() << "(" << tmptok->strAt(2) <<std::endl;
+                                    // const std::vector<const Scope * > thatscopelist = findFunctionRefer(function->token);
+                                    const std::vector<const Token * > calllist = findFunctionCall(function->token);
+                                    
+                                    for(std::vector<const Token *>::const_iterator it = calllist.begin(); it!= calllist.end(); it++){
+                                        // const Scope * s = *thatscope;
+                                        // TODO: optimization position.
+                                        thatparam = (*it)->tokAt(2);
+                                        for(std::size_t i = 0; i < pos; i++){
+                                            thatparam = thatparam->nextArgument();
                                         }
-
+                                        if(thatparam->getMaxValue(false))
+                                            std::cout <<"here--->" << thatparam->getMaxValue(false)->intvalue << std::endl;
+                                        else
+                                            std::cout<< "no such value"<<std::endl;
+                                        // std::cout <<"here--->" << (*it)->strAt(pos+2) << std::endl;
                                     }
                                     std::cout<<" find reference: "<<symboldatabase->findFunction(function->token)->name();
                                     std::cout<<" ( " << symboldatabase->findFunction(function->token)->token->tokAt(2)->str()<< std::endl;

@@ -86,6 +86,7 @@ public:
         checkOther.checkComparePointers();
         checkOther.checkIncompleteStatement();
 
+        
         checkOther.checkBufferIndexofParam();
         checkOther.checkThirdArgument();
         checkOther.checkHiddenChannel();
@@ -132,6 +133,7 @@ public:
     /** @brief %Check for comma separated statements in return */
     void checkCommaSeparatedReturn();
 
+    const std::vector<const Token * > findFunctionCall(const Token *tok);
     /** @brief %Check buffer[date]-->datecondtion not full */
     void checkBufferIndexofParam();
 
