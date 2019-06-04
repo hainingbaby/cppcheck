@@ -86,7 +86,7 @@ public:
         checkOther.checkComparePointers();
         checkOther.checkIncompleteStatement();
 
-        
+        // checkOther.IsExtraScope(const Variable* var);
         checkOther.checkBufferIndexofParam();
         checkOther.checkThirdArgument();
         checkOther.checkHiddenChannel();
@@ -133,7 +133,11 @@ public:
     /** @brief %Check for comma separated statements in return */
     void checkCommaSeparatedReturn();
 
+
     const std::vector<const Token * > findFunctionCall(const Token *tok);
+
+    bool IsExtraScope(const Variable *var);
+
     /** @brief %Check buffer[date]-->datecondtion not full */
     void checkBufferIndexofParam();
 
@@ -284,6 +288,8 @@ private:
     void incompleteArrayFillError(const Token* tok, const std::string& buffer, const std::string& function, bool boolean);
     void varFuncNullUBError(const Token *tok);
     void commaSeparatedReturnError(const Token *tok);
+
+    void BufferInFunctionCallError(const Token *indexvar, const Token *callpos);
     void BufferAccessIndexError(const Token *tok);
     void ThirdParamError(const Token *tok);
     void HiddenChannelError(const Token *tok);

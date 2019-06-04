@@ -586,6 +586,7 @@ void CheckBufferOverrun::checkFunctionCall(const Token *tok, const ArrayInfo &ar
 
 void CheckBufferOverrun::checkScope(const Token *tok, const std::vector<const std::string*> &varname, const ArrayInfo &arrayInfo)
 {
+    std::cout << "#######check scope1#######" << std::endl;
     const MathLib::bigint size = arrayInfo.num(0);
     //########test for array size 
     //@haining
@@ -899,7 +900,7 @@ void CheckBufferOverrun::valueFlowCheckArrayIndex(const Token * const tok, const
 
         // Is totalIndex in bounds?
         if (totalIndex >= totalElements) {
-            std::cout<<"in checkScope 4 totalIndex overflow...\n"<<std::endl;
+            std::cout<<"in checkScope 4 totalIndex overflow...\n";
             arrayIndexOutOfBoundsError(tok, arrayInfo, indexes);
             break;
         }
@@ -909,7 +910,7 @@ void CheckBufferOverrun::valueFlowCheckArrayIndex(const Token * const tok, const
             // check each index for overflow
             for (std::size_t i = 0; i < indexes.size(); ++i) {
                 if (indexes[i].intvalue >= arrayInfo.num(i)) {
-                    std::cout<<"in checkScope 5 each index overflow...\n"<<std::endl;
+                    std::cout<<"in checkScope 5 each index overflow...\n";
                     // The access is still within the memory range for the array
                     // so it may be intentional.
                     arrayIndexOutOfBoundsError(tok, arrayInfo, indexes);

@@ -923,9 +923,95 @@ void CheckOther::checkVariableScope()
             }
         }
 
-        if (reduce && used)
+        if (reduce && used){
             variableScopeError(var->nameToken(), var->name());
+        }
     }
+}
+
+bool CheckOther::IsExtraScope(const Variable* var)
+{
+    bool IsExtraScope = false;
+    std::cout << "checking ..........." << std::endl;
+
+    if (!var || !var->isLocal() || (!var->isPointer() && !var->isReference() && !var->typeStartToken()->isStandardType())){
+        std::cout << "return because 1........"<<std::endl;
+        return false;
+    }
+
+    if (var->isConst()){
+        std::cout << "return because 2........"<<std::endl;
+        return false;
+    }
+
+    bool forHead = false; // Don't check variables declared in header of a for loop
+    for (const Token* tok = var->typeStartToken(); tok; tok = tok->previous()) {
+        std::cout << "#########" << tok->next()->str() << std::endl;
+        if (tok->str() == "(") {
+            forHead = true;
+            break;
+        } else if (Token::Match(tok, "[;{}]"))
+            break;
+    }
+    if (forHead){
+        std::cout << "return because 3........"<<std::endl;
+        return false;
+    }
+
+    const Token* tok = var->nameToken()->next();
+    if (Token::Match(tok, "; %varid% = %any% ;", var->declarationId())) {
+        tok = tok->tokAt(3);
+        if (!tok->isNumber() && tok->tokType() != Token::eString && tok->tokType() != Token::eChar && !tok->isBoolean()){
+            std::cout << "return because 4........"<<std::endl;
+            return false;
+        }
+    }
+    // bailout if initialized with function call that has possible side effects
+    if (Token::Match(tok, "[(=]") && Token::simpleMatch(tok->astOperand2(), "(")){
+        std::cout << "return because 5........"<<std::endl;
+        return false;
+    }
+    bool reduce = true;
+    bool used = false; // Don't warn about unused variables
+    for (; tok && tok != var->scope()->bodyEnd; tok = tok->next()) {
+        if (tok->str() == "{" && tok->scope() != tok->previous()->scope() && !tok->isExpandedMacro() && tok->scope()->type != Scope::eLambda) {
+            if (used) {
+                bool used2 = false;
+                if (!checkInnerScope(tok, var, used2) || used2) {
+                    reduce = false;
+                    break;
+                }
+            } else if (!checkInnerScope(tok, var, used)) {
+                reduce = false;
+                break;
+            }
+
+            tok = tok->link();
+
+            // parse else if blocks..
+        } else if (Token::simpleMatch(tok, "else { if (") && Token::simpleMatch(tok->linkAt(3), ") {")) {
+            const Token *endif = tok->linkAt(3)->linkAt(1);
+            bool elseif = false;
+            if (Token::simpleMatch(endif, "} }"))
+                elseif = true;
+            else if (Token::simpleMatch(endif, "} else {") && Token::simpleMatch(endif->linkAt(2),"} }"))
+                elseif = true;
+            if (elseif && Token::findmatch(tok->next(), "%varid%", tok->linkAt(1), var->declarationId())) {
+                reduce = false;
+                break;
+            }
+        } else if (tok->varId() == var->declarationId() || tok->str() == "goto") {
+            reduce = false;
+            break;
+        }
+    }
+
+    if (reduce && used){
+        IsExtraScope = true;
+    }
+    else
+        std::cout << "return because final........"<<std::endl;
+    return IsExtraScope;
 }
 
 bool CheckOther::checkInnerScope(const Token *tok, const Variable* var, bool& used)
@@ -1102,33 +1188,41 @@ void CheckOther::checkBufferIndexofParam()
     // last update at: 2019/05/23 @hainingbaby
     // 
     const SymbolDatabase *symboldatabase = mTokenizer->getSymbolDatabase();  
-    // for (std::list<Scope>::const_iterator ascope = symboldatabase->scopeList.begin(); ascope != symboldatabase->scopeList.end(); ++ascope) {
-    //     for (std::list<Function>::const_iterator func = ascope->functionList.begin(); func != ascope->functionList.end(); ++func){
-    //         std::cout << func->name() << " ";
-    //     }
-    // }
+// for (const Variable* var : symboldatabase->variableList()){
+//             if(he){
+//                 std::cout <<"-->" << he->name() << "----"  << std::endl;
+//             }
+//         }
     for(const Scope * scope : symboldatabase->functionScopes){
         for(const Token *arraytok = scope->bodyStart; arraytok != scope->bodyEnd; arraytok = arraytok->next()){
             if(Token::Match(arraytok,"%type% %var% [ %num% ] = ")){
                 arraytok = arraytok->tokAt(1);
                 unsigned int arrayID = arraytok->varId();
                 // printf("array %s and id : %d\n",arraytok->str().c_str(),arrayID);
-                const std::size_t size = MathLib::toLongNumber(arraytok->strAt(2));
+                const MathLib::bigint size = MathLib::toLongNumber(arraytok->strAt(2));
                 for(const Token *paramtok = arraytok;paramtok != scope->bodyEnd; paramtok = paramtok->next()){
                     if(Token::Match(paramtok->tokAt(-2),"%varid% [ %var% ",arrayID)){
-                        // look for condition for param. @haining
+                        // look up condition for param. @haining
                         // TODO: add date[var]-->var.getMaxValue()-->done 
                         // distiguish < & <=
                         // add function call msg.
                         const std::size_t paramID  = paramtok->varId();
                         // printf("paramID : %d\n",paramID);
-                        std::size_t maxnum = 0;
+                        MathLib::bigint maxnum = 0;
                         bool issufficient = false;
+                        // if find function call in this file.
+                        // bool findcall = false;
                         if(paramtok->getMaxValue(false)){
                             maxnum =paramtok->getMaxValue(false)->intvalue;
-                            std::cout<<paramtok->str()<< " : false maxvalue : " << maxnum<<std::endl;
+                            std::cout<<paramtok->str()<< " :Inner false maxvalue--->" << maxnum<<std::endl;
                             // issufficient represent condition is good in formatting
                             issufficient = true;
+                        }
+                        else if(paramtok->values().size() > 0){
+                            std::list<ValueFlow::Value>::const_iterator it;
+                            for (it = paramtok->values().begin(); it != paramtok->values().end(); ++it) {
+                                std::cout<< paramtok->str() << " : Inner all value--->:" << it->intvalue <<std::endl;
+                            }
                         }
                         for(const Token *iftok = scope->bodyStart; iftok != paramtok; iftok = iftok->next()){
                             if(issufficient && maxnum > 0)
@@ -1153,60 +1247,88 @@ void CheckOther::checkBufferIndexofParam()
                         }
                         if(!issufficient){
                             // look up function Arguments to find if exits the index parameter record position.
-                            const Variable * paramvar = symboldatabase->getVariableFromVarId(paramID);
+                            // const Variable * paramvar = symboldatabase->getVariableFromVarId(paramID);
+                            // if(IsExtraScope(arraytok->variable())){
+                            //     std::cout << "scope extra--->JUMP this param"<<std::endl;
+                            //     continue;
+                            // }
                             const Function * function = scope->function;
+                            // std::cout << function->tokenDef->tokAt(2)->str()<<std::endl;
                             const Token * thatparam;
                             if (function && function->argCount() > 0 && paramtok->variable()->isArgument()){
                                 // pos: argument position,default 1 ?
                                 // if param is arg of fuc,it must can be found. so defined here. -->not Thoughtful
                                 std::size_t pos = 0;  
                                 // pos < function->argCount()+1
+                                // arg is in function(), while param is in buff[param].
                                 for(const Token *argtok = function->tokenDef->next(); argtok != function->tokenDef->next()->link(); argtok = argtok->next()){
-                                    if(arraytok->str() == ",")
+                                    if(argtok->str() == ",")
                                         pos ++;
                                     if(argtok->str() == paramtok->str()){
                                         break;
                                     }
                                     // argtok = argtok->nextArgument(); 
                                 }
-                                // make sure there exit a function call.
-                                if(symboldatabase->findFunction(function->tokenDef)->name() == scope->className){
+                                // make sure there exit a function call. symboldatabase->findFunction(function->tokenDef)
+                                if(findFunctionCall(function->token).size() > 0 && symboldatabase->findFunction(function->tokenDef)->name() == scope->className){
+                                    std::cout<<"running find function refer--" << function->name() << std::endl;
+                                    issufficient = true;
+                                    // findcall = true;
 
                                     // const std::vector<const Scope * > thatscopelist = findFunctionRefer(function->token);
                                     const std::vector<const Token * > calllist = findFunctionCall(function->token);
-                                    
+                                    // signed int tmp = 0;
                                     for(std::vector<const Token *>::const_iterator it = calllist.begin(); it!= calllist.end(); it++){
                                         // const Scope * s = *thatscope;
                                         // TODO: optimization position.
                                         thatparam = (*it)->tokAt(2);
+
                                         for(std::size_t i = 0; i < pos; i++){
                                             thatparam = thatparam->nextArgument();
                                         }
-                                        if(thatparam->getMaxValue(false))
-                                            std::cout <<"here--->" << thatparam->getMaxValue(false)->intvalue << std::endl;
-                                        else
-                                            std::cout<< "no such value"<<std::endl;
+                                        // if(thatparam->getMaxValue(false))
+                                            // std::cout<<"-->" << thatparam->getMaxValue(false)->intvalue << ">" << size<< std::endl;
+                                            // < 0 有小于0的 solution.
+                                        // for (const Variable &var : thatparam->scope()->varlist) {
+                                        //     std::cout << "-->" << var.name() << std::endl;
+                                        // }
+                                        // std::cout << thatparam->linenr() <<std::endl;
+                                        // for (const Variable* var : symboldatabase->variableList()){
+                                        //     std::cout <<"-->" << var->name() << "----" << var->nameToken()->linenr() << std::endl;
+                                        // }
+                                        // if(IsExtraScope(thatparam->astParent()->astOperand1()->variable())){
+                                        //     std::cout << "scope extra--->JUMP that param"<<std::endl;
+                                        //     continue;
+                                        // }
+                                        if(thatparam->scope()->type == Scope::eIf)
+                                            std::cout << "scope is --> if " << thatparam->scope()->type << std::endl;
+
+                                        if(thatparam->values().size() > 0){
+                                            for (std::list<ValueFlow::Value>::const_iterator it = thatparam->values().begin(); it != thatparam->values().end(); ++it) {
+                                                std::cout<< "Out all possible value--->:" << it->intvalue <<std::endl;
+                                            }
+                                        }
+                                        if(thatparam->getMaxValue(false) && thatparam->getMaxValue(false)->intvalue >= size && thatparam->getMaxValue(false)->intvalue >0){
+                                            std::cout << "overflow value-->" << thatparam->getMaxValue(false)->intvalue << std::endl;
+                                            BufferInFunctionCallError(paramtok,thatparam);
+                                        }
+                                        else if(thatparam->getMaxValue(false) && thatparam->getMaxValue(false)->intvalue < size){
+                                            std::cout << "get other value-->" << thatparam->getMaxValue(false)->intvalue << std::endl;
+                                        }
+                                        // if(thatparam->getMaxValue(false) && (tmp > size)){
+                                        //     std::cout<<"-->" << tmp << ">" << size<< std::endl;
+                                        //     BufferInFunctionCallError(paramtok,thatparam);
+                                        // }
+                                        if(!thatparam->getMaxValue(false))
+                                            BufferInFunctionCallError(paramtok,thatparam);
                                         // std::cout <<"here--->" << (*it)->strAt(pos+2) << std::endl;
-                                    }
-                                    std::cout<<" find reference: "<<symboldatabase->findFunction(function->token)->name();
-                                    std::cout<<" ( " << symboldatabase->findFunction(function->token)->token->tokAt(2)->str()<< std::endl;
-                                    const Variable * relatedvar = symboldatabase->findFunction(function->tokenDef)->getArgumentVar(pos);
-                                    // const Variable * relatedvar = function->getArgumentVar(pos);
-                                    std::cout<<"var : "<< relatedvar->nameToken()->str() << std::endl;
-                                    if(relatedvar->nameToken()->getMaxValue(false)){
-                                        maxnum = relatedvar->nameToken()->getMaxValue(false)->intvalue;
-                                        std::cout<<"max value of it is : "<< maxnum << std::endl;
-                                    }
-                                    else{
-                                        std::cout<< "No value find."<<std::endl;
-                                        BufferAccessIndexError(paramtok->tokAt(-2));
                                     }
                                 }
                                 // printf("%s is arg of function %s\n",indexvar->name().c_str(),function->name().c_str());
                             }
                         }
                         if(size <= maxnum || !issufficient)
-                            BufferAccessIndexError(paramtok->tokAt(-2));
+                            BufferAccessIndexError(paramtok->astParent()->astOperand1());
                     }
                 }
             }
@@ -1214,10 +1336,17 @@ void CheckOther::checkBufferIndexofParam()
     }
 }
 
-void CheckOther::BufferAccessIndexError(const Token *tok)
+void CheckOther::BufferInFunctionCallError(const Token *indextok, const Token *callpos)
 {
-    const std::string errmsg = "BufferOverFlow. Array '" + tok->str() + "' maybe OutofBounds.";
-    reportError(tok, Severity::error, "BUFFER_OVERFLOW", errmsg, CWE398, false);
+    const std::string errmsg = "BufferOverFlow. Access of ' " + indextok->astParent()->astOperand1()->str() + "["+ indextok->str() +
+    "] ' Out of Bounds--->Function Call Line : " + MathLib::toString(callpos->linenr()) ;
+    reportError(indextok->astParent()->astOperand1(), Severity::error, "BUFFER_OVERFLOW", errmsg, CWE398, false);
+}
+
+void CheckOther::BufferAccessIndexError(const Token *arraytok)
+{
+    const std::string errmsg = "BufferOverFlow. Access of Array '" + arraytok->str() + "' maybe Out of Bounds.";
+    reportError(arraytok, Severity::error, "BUFFER_OVERFLOW", errmsg, CWE398, false);
 }
 
 void CheckOther::checkThirdArgument()
