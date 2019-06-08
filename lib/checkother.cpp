@@ -1214,16 +1214,16 @@ void CheckOther::checkBufferIndexofParam()
                         // bool findcall = false;
                         if(paramtok->getMaxValue(false)){
                             maxnum =paramtok->getMaxValue(false)->intvalue;
-                            std::cout<<paramtok->str()<< " :Inner false maxvalue--->" << maxnum<<std::endl;
+                            // std::cout<<paramtok->str()<< " :Inner false maxvalue--->" << maxnum<<std::endl;
                             // issufficient represent condition is good in formatting
                             issufficient = true;
                         }
-                        else if(paramtok->values().size() > 0){
-                            std::list<ValueFlow::Value>::const_iterator it;
-                            for (it = paramtok->values().begin(); it != paramtok->values().end(); ++it) {
-                                std::cout<< paramtok->str() << " : Inner all value--->:" << it->intvalue <<std::endl;
-                            }
-                        }
+                        // else if(paramtok->values().size() > 0){
+                        //     std::list<ValueFlow::Value>::const_iterator it;
+                        //     for (it = paramtok->values().begin(); it != paramtok->values().end(); ++it) {
+                        //         std::cout<< paramtok->str() << " : Inner all value--->:" << it->intvalue <<std::endl;
+                        //     }
+                        // }
                         for(const Token *iftok = scope->bodyStart; iftok != paramtok; iftok = iftok->next()){
                             if(issufficient && maxnum > 0)
                                 break;
@@ -1271,7 +1271,7 @@ void CheckOther::checkBufferIndexofParam()
                                 }
                                 // make sure there exit a function call. symboldatabase->findFunction(function->tokenDef)
                                 if(findFunctionCall(function->token).size() > 0 && symboldatabase->findFunction(function->tokenDef)->name() == scope->className){
-                                    std::cout<<"running find function refer--" << function->name() << std::endl;
+                                    // std::cout<<"running find function refer--" << function->name() << std::endl;
                                     issufficient = true;
                                     // findcall = true;
 
@@ -1300,21 +1300,21 @@ void CheckOther::checkBufferIndexofParam()
                                         //     std::cout << "scope extra--->JUMP that param"<<std::endl;
                                         //     continue;
                                         // }
-                                        if(thatparam->scope()->type == Scope::eIf)
-                                            std::cout << "scope is --> if " << thatparam->scope()->type << std::endl;
+                                        // if(thatparam->scope()->type == Scope::eIf)
+                                        //     std::cout << "scope is --> if " << thatparam->scope()->type << std::endl;
 
-                                        if(thatparam->values().size() > 0){
-                                            for (std::list<ValueFlow::Value>::const_iterator it = thatparam->values().begin(); it != thatparam->values().end(); ++it) {
-                                                std::cout<< "Out all possible value--->:" << it->intvalue <<std::endl;
-                                            }
-                                        }
-                                        if(thatparam->getMaxValue(false) && thatparam->getMaxValue(false)->intvalue >= size && thatparam->getMaxValue(false)->intvalue >0){
-                                            std::cout << "overflow value-->" << thatparam->getMaxValue(false)->intvalue << std::endl;
-                                            BufferInFunctionCallError(paramtok,thatparam);
-                                        }
-                                        else if(thatparam->getMaxValue(false) && thatparam->getMaxValue(false)->intvalue < size){
-                                            std::cout << "get other value-->" << thatparam->getMaxValue(false)->intvalue << std::endl;
-                                        }
+                                        // if(thatparam->values().size() > 0){
+                                        //     for (std::list<ValueFlow::Value>::const_iterator it = thatparam->values().begin(); it != thatparam->values().end(); ++it) {
+                                        //         std::cout<< "Out all possible value--->:" << it->intvalue <<std::endl;
+                                        //     }
+                                        // }
+                                        // if(thatparam->getMaxValue(false) && thatparam->getMaxValue(false)->intvalue >= size && thatparam->getMaxValue(false)->intvalue >0){
+                                        //     std::cout << "overflow value-->" << thatparam->getMaxValue(false)->intvalue << std::endl;
+                                        //     BufferInFunctionCallError(paramtok,thatparam);
+                                        // }
+                                        // else if(thatparam->getMaxValue(false) && thatparam->getMaxValue(false)->intvalue < size){
+                                        //     std::cout << "get other value-->" << thatparam->getMaxValue(false)->intvalue << std::endl;
+                                        // }
                                         // if(thatparam->getMaxValue(false) && (tmp > size)){
                                         //     std::cout<<"-->" << tmp << ">" << size<< std::endl;
                                         //     BufferInFunctionCallError(paramtok,thatparam);

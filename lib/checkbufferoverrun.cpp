@@ -586,7 +586,7 @@ void CheckBufferOverrun::checkFunctionCall(const Token *tok, const ArrayInfo &ar
 
 void CheckBufferOverrun::checkScope(const Token *tok, const std::vector<const std::string*> &varname, const ArrayInfo &arrayInfo)
 {
-    std::cout << "#######check scope1#######" << std::endl;
+    // std::cout << "#######check scope1#######" << std::endl;
     const MathLib::bigint size = arrayInfo.num(0);
     //########test for array size 
     //@haining
@@ -631,7 +631,7 @@ void CheckBufferOverrun::checkScope(const Token *tok, const std::vector<const st
 
     for (const Token* const end = tok->scope()->bodyEnd; tok && tok != end; tok = tok->next()) {
         if (declarationId != 0 && Token::Match(tok, "%varid% = new|malloc|realloc", declarationId)) {
-            printf("find malloc will exit for loop\n");
+            // printf("find malloc will exit for loop\n");
             // Abort
             break;
         }
@@ -661,11 +661,11 @@ void CheckBufferOverrun::checkScope(const Token *tok, const std::vector<const st
                 const ValueFlow::Value *value = tok2->astOperand2()->getMaxValue(false);
                 if (value) {
                     indexes.push_back(value->intvalue);
-                    printf("getMaxValue: %d\n",value->intvalue);
+                    // printf("getMaxValue: %d\n",value->intvalue);
                 }
-                else{
-                    printf("can not locate array's index maxvalue.\n");
-                }
+                // else{
+                //     printf("can not locate array's index maxvalue.\n");
+                // }
             }
 
             if (indexes.size() == arrayInfo.num().size()) {
@@ -681,11 +681,11 @@ void CheckBufferOverrun::checkScope(const Token *tok, const std::vector<const st
                 MathLib::bigint totalIndex = 0;
 
                 // calculate the totalElements and totalIndex..
-                printf("indexes size: %d\n",indexes.size());
+                // printf("indexes size: %d\n",indexes.size());
                 for (std::size_t i = 0; i < indexes.size(); ++i) {
                     const std::size_t ri = indexes.size() - 1 - i;
                     totalIndex += indexes[ri] * totalElements;
-                    printf("totalIndex += %d * %d \n",indexes[ri],totalElements);
+                    // printf("totalIndex += %d * %d \n",indexes[ri],totalElements);
                     totalElements *= arrayInfo.num(ri);
                     if (arrayInfo.num(ri) == -1) {
                         // unknown size
@@ -712,8 +712,8 @@ void CheckBufferOverrun::checkScope(const Token *tok, const std::vector<const st
 
                 // Is totalIndex in bounds?
                 if (totalIndex > totalElements || totalIndex < 0) {
-                    std::cout<<"in checkScope 1 totalIndex overflow...\n"<<std::endl;
-                    std::cout<<"totalIndex totalElements varcount: "<<totalIndex<<totalElements<<varcount<<std::endl;
+                    // std::cout<<"in checkScope 1 totalIndex overflow...\n"<<std::endl;
+                    // std::cout<<"totalIndex totalElements varcount: "<<totalIndex<<totalElements<<varcount<<std::endl;
                     arrayIndexOutOfBoundsError(tok->tokAt(1 + varcount), arrayInfo, indexes);
                 }
                 // Is any array index out of bounds?
@@ -722,7 +722,7 @@ void CheckBufferOverrun::checkScope(const Token *tok, const std::vector<const st
                     for (std::size_t i = 0; i < indexes.size(); ++i) {
                         if (indexes[i] >= arrayInfo.num(i)) {
                             if (indexes.size() == 1U) {
-                                std::cout<<"in checkScope 2 each Index overflow...\n"<<std::endl;
+                                // std::cout<<"in checkScope 2 each Index overflow...\n"<<std::endl;
                                 arrayIndexOutOfBoundsError(tok->tokAt(1 + varcount), arrayInfo, indexes);
                                 break; // only warn about the first one
                             }
@@ -730,7 +730,7 @@ void CheckBufferOverrun::checkScope(const Token *tok, const std::vector<const st
                             // The access is still within the memory range for the array
                             // so it may be intentional.
                             else if (printInconclusive) {
-                                std::cout<<"in checkScope 3 Inconclusive overflow...\n"<<std::endl;
+                                // std::cout<<"in checkScope 3 Inconclusive overflow...\n"<<std::endl;
                                 arrayIndexOutOfBoundsError(tok->tokAt(1 + varcount), arrayInfo, indexes);
                                 break; // only warn about the first one
                             }
@@ -900,7 +900,7 @@ void CheckBufferOverrun::valueFlowCheckArrayIndex(const Token * const tok, const
 
         // Is totalIndex in bounds?
         if (totalIndex >= totalElements) {
-            std::cout<<"in checkScope 4 totalIndex overflow...\n";
+            // std::cout<<"in checkScope 4 totalIndex overflow...\n";
             arrayIndexOutOfBoundsError(tok, arrayInfo, indexes);
             break;
         }
@@ -910,7 +910,7 @@ void CheckBufferOverrun::valueFlowCheckArrayIndex(const Token * const tok, const
             // check each index for overflow
             for (std::size_t i = 0; i < indexes.size(); ++i) {
                 if (indexes[i].intvalue >= arrayInfo.num(i)) {
-                    std::cout<<"in checkScope 5 each index overflow...\n";
+                    // std::cout<<"in checkScope 5 each index overflow...\n";
                     // The access is still within the memory range for the array
                     // so it may be intentional.
                     arrayIndexOutOfBoundsError(tok, arrayInfo, indexes);
@@ -1223,7 +1223,7 @@ void CheckBufferOverrun::checkGlobalAndLocalVariable()
                     std::vector<MathLib::bigint> indexes2(indexes.size());
                     for (unsigned int i = 0; i < indexes.size(); ++i)
                         indexes2[i] = indexes[i].intvalue;
-                    std::cout<<"in checkScope 6 overflow...\n"<<std::endl;
+                    // std::cout<<"in checkScope 6 overflow...\n"<<std::endl;
                     arrayIndexOutOfBoundsError(callstack, arrayInfo, indexes2);
                 }
             }
@@ -1316,7 +1316,7 @@ void CheckBufferOverrun::checkGlobalAndLocalVariable()
                 else
                     nextTok = tok->link()->next();
             } else if (Token::Match(tok, "[*;{}] %var% = malloc|alloca (") && Token::simpleMatch(tok->linkAt(4), ") ;")) {
-                std::cout<<"check global find malloc..\n";
+                // std::cout<<"check global find malloc..\n";
                 tok = tok->tokAt(4);
                 if (tok->astOperand2() == nullptr || tok->astOperand2()->getMaxValue(false) == nullptr)
                     continue;
