@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <results testset="real">
+    <testset name="OSSL" CVE="CVE-2014-0160">
+      <testcase id="OSSL_00_basic">
+        <path>OSSL_00_basic</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>a.c</file>
+            <line>73</line>
+          </source>
+          <sink>
+            <file>a.c</file>
+            <line>29</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="OSSL_00_01">
+        <path>OSSL_00_01</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>good sink</counter>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>a.c</file>
+            <line>69</line>
+          </source>
+          <sink>
+            <file>a.c</file>
+            <line>25</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="OSSL_00_02">
+        <path>OSSL_00_02</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>good source</counter>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>a.c</file>
+            <line>41</line>
+          </source>
+          <sink>
+            <file>a.c</file>
+            <line>25</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="OSSL_00_03">
+        <path>OSSL_00_03</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>validation check</counter>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>a.c</file>
+            <line>72</line>
+          </source>
+          <sink>
+            <file>a.c</file>
+            <line>28</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="OSSL_01">
+        <path>OSSL_01</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>bss_sock.c</file>
+            <line>74</line>
+          </source>
+          <sink>
+            <file>t1_lib.c</file>
+            <line>27</line>
+          </sink>
+          <feature name="FP" />
+          <feature name="FCC" />
+          <feature name="NDS" />
+        </vul>
+      </testcase>
+      <testcase id="OSSL_02">
+        <path>OSSL_02</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>s3_pkt.c</file>
+            <line>11</line>
+          </source>
+          <sink>
+            <file>t1_lib.c</file>
+            <line>27</line>
+          </sink>
+          <feature name="FCC" />
+          <feature name="NDS" />
+        </vul>
+      </testcase>
+      <testcase id="OSSL_02_01">
+        <path>OSSL_02_01</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>validation check</counter>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>s3_pkt.c</file>
+            <line>11</line>
+          </source>
+          <sink>
+            <file>t1_lib.c</file>
+            <line>34</line>
+          </sink>
+          <feature name="FCC" />
+          <feature name="NDS" />
+        </vul>
+      </testcase>
+      <testcase id="OSSL_03">
+        <path>OSSL_03</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>s3_pkt.c</file>
+            <line>11</line>
+          </source>
+          <sink>
+            <file>t1_lib.c</file>
+            <line>21</line>
+          </sink>
+          <feature name="FCC(2)" />
+          <feature name="NDS" />
+        </vul>
+      </testcase>
+      <testcase id="OSSL_04">
+        <path>OSSL_04</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>s3_pkt.c</file>
+            <line>98</line>
+          </source>
+          <sink>
+            <file>t1_lib.c</file>
+            <line>21</line>
+          </sink>
+          <feature name="FCC(1)" />
+          <feature name="NDS" />
+        </vul>
+      </testcase>
+      <testcase id="OSSL_05">
+        <path>OSSL_05</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>s3_pkt.c</file>
+            <line>29</line>
+          </source>
+          <sink>
+            <file>s3_pkt.c</file>
+            <line>54</line>
+          </sink>
+        </vul>
+      </testcase>
+    </testset>
+    <testset name="ICU" CVE="CVE-2016-14952">
+      <testcase id="ICU_00_basic">
+        <path>ICU_00_basic</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>DOUBLE_FREE</type>
+          <source>
+            <file>a.cpp</file>
+            <line>13</line>
+          </source>
+          <sink>
+            <file>a.cpp</file>
+            <line>25</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="ICU_00_01">
+        <path>ICU_00_01</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>good sink</counter>
+          <type>DOUBLE_FREE</type>
+          <source>
+            <file>a.cpp</file>
+            <line>13</line>
+          </source>
+          <sink>
+            <file>a.cpp</file>
+            <line>25</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="ICU_00_02">
+        <path>ICU_00_02</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>good source</counter>
+          <type>DOUBLE_FREE</type>
+          <source>
+            <file>a.cpp</file>
+            <line>13</line>
+          </source>
+          <sink>
+            <file>a.cpp</file>
+            <line>25</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="ICU_00_03">
+        <path>ICU_00_03</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>validation check</counter>
+          <type>DOUBLE_FREE</type>
+          <source>
+            <file>a.cpp</file>
+            <line>15</line>
+          </source>
+          <sink>
+            <file>a.cpp</file>
+            <line>30</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="ICU_01">
+        <path>ICU_01</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>DOUBLE_FREE</type>
+          <source>
+            <file>zonemeta.cpp</file>
+            <line>14</line>
+          </source>
+          <path>
+            <file>zonemeta.cpp</file>
+            <line>42</line>
+          </path>
+          <sink>
+            <file>cmemory.cpp</file>
+            <line>26</line>
+          </sink>
+          <feature name="FCC(2)" />
+        </vul>
+      </testcase>
+      <testcase id="ICU_01_01">
+        <path>ICU_01_01</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>good source</counter>
+          <type>DOUBLE_FREE</type>
+          <source>
+            <file>zonemeta.cpp</file>
+            <line>42</line>
+          </source>
+          <sink>
+            <file>cmemory.cpp</file>
+            <line>26</line>
+          </sink>
+          <feature name="FCC(2)" />
+        </vul>
+      </testcase>
+      <testcase id="ICU_02">
+        <path>ICU_02</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>DOUBLE_FREE</type>
+          <source>
+            <file>zonemeta.cpp</file>
+            <line>53</line>
+          </source>
+          <sink>
+            <file>cmemory.cpp</file>
+            <line>26</line>
+          </sink>
+          <feature name="FCC(1)" />
+        </vul>
+      </testcase>
+    </testset>
+    <testset name="OPENCV" CVE="CVE-2017-12603">
+      <testcase id="OPENCV_00_basic">
+        <path>OPENCV_00_basic</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>a.c</file>
+            <line>36</line>
+          </source>
+          <sink>
+            <file>a.c</file>
+            <line>15</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="OPENCV_00_01">
+        <path>OPENCV_00_01</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>good sink</counter>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>a.c</file>
+            <line>36</line>
+          </source>
+          <sink>
+            <file>a.c</file>
+            <line>15</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="OPENCV_00_02">
+        <path>OPENCV_00_02</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>good source</counter>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>a.c</file>
+            <line>27</line>
+          </source>
+          <sink>
+            <file>a.c</file>
+            <line>15</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="OPENCV_00_03">
+        <path>OPENCV_00_03</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>validation check</counter>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>a.c</file>
+            <line>38</line>
+          </source>
+          <sink>
+            <file>a.c</file>
+            <line>17</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="OPENCV_01">
+        <path>OPENCV_01</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>bitstrm.cpp</file>
+            <line>63</line>
+          </source>
+          <propagation>
+            <file>grfmt_bmp.cpp</file>
+            <line>58</line>
+          </propagation>
+          <propagation>
+            <file>grfmt_bmp.cpp</file>
+            <line>75</line>
+          </propagation>
+          <sink>
+            <file>bitstrm.cpp</file>
+            <line>181</line>
+          </sink>
+          <feature name="FCC" />
+        </vul>
+      </testcase>
+      <testcase id="OPENCV_01_01">
+        <path>OPENCV_01_01</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>validation check</counter>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>bitstrm.cpp</file>
+            <line>63</line>
+          </source>
+          <propatation>
+            <file>grfmt_bmp.cpp</file>
+            <line>58</line>
+          </propatation>
+          <propagation>
+            <file>grfmt_bmp.cpp</file>
+            <line>75</line>
+          </propagation>
+          <sink>
+            <file>bitstrm.cpp</file>
+            <line>181</line>
+          </sink>
+          <feature name="FCC" />
+        </vul>
+      </testcase>
+    </testset>
+    <testset name="FTPD" CVE="CVE-2003-0466">
+      <testcase id="FTPD_00_basic">
+        <path>FTPD_00_basic</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>a.c</file>
+            <line>15</line>
+          </source>
+          <sink>
+            <file>a.c</file>
+            <line>15</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="FTPD_00_01">
+        <path>FTPD_00_01</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>good sink</counter>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>a.c</file>
+            <line>14</line>
+          </source>
+          <sink>
+            <file>a.c</file>
+            <line>14</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="FTPD_00_02">
+        <path>FTPD_00_02</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>good source</counter>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>a.c</file>
+            <line>11</line>
+          </source>
+          <sink>
+            <file>a.c</file>
+            <line>17</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="FTPD_00_03">
+        <path>FTPD_00_03</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>validation check</counter>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>a.c</file>
+            <line>6</line>
+          </source>
+          <sink>
+            <file>a.c</file>
+            <line>16</line>
+          </sink>
+        </vul>
+      </testcase>
+      <testcase id="FTPD_01">
+        <path>FTPD_01</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>call_fb_realpath.c</file>
+            <line>7</line>
+          </source>
+          <propagation>
+            <file>call_fb_realpath.c</file>
+            <line>17</line>
+          </propagation>
+          <propagation>
+            <file>call_fb_realpath.c</file>
+            <line>21</line>
+          </propagation>
+          <sink>
+            <file>realpath-bad.c</file>
+            <line>342</line>
+          </sink>
+          <feature name="AFC" />
+        </vul>
+      </testcase>
+      <testcase id="FTPD_01_01">
+        <path>FTPD_01_CE01</path>
+        <vul>
+          <iscounterexample>Yes</iscounterexample>
+          <counter>validation check</counter>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>call_fb_realpath.c</file>
+            <line>7</line>
+          </source>
+          <propagation>
+            <file>call_fb_realpath.c</file>
+            <line>17</line>
+          </propagation>
+          <propagation>
+            <file>call_fb_realpath.c</file>
+            <line>21</line>
+          </propagation>
+          <sink>
+            <file>realpath-bad.c</file>
+            <line>342</line>
+          </sink>
+          <feature name="AFC" />
+        </vul>
+      </testcase>
+    </testset>
+    <testset name="L2R" CVE="CVE-2004-2167">
+      <testcase id="L2R_01">
+        <path>L2R_01</path>
+        <vul>
+          <iscounterexample>No</iscounterexample>
+          <type>BUFFER_OVERFLOW</type>
+          <source>
+            <file>parser.c</file>
+            <line>339</line>
+          </source>
+          <sink>
+            <file>definitions.c</file>
+            <line>157</line>
+          </sink>
+        </vul>
+      </testcase>
+    </testset>
+  </results>

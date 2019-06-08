@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results version="2">
+    <cppcheck version="1.88 dev"/>
+    <errors>
+        <error id="arrayIndexOutOfBounds" severity="error" msg="Array &apos;cCommand[100]&apos; accessed at index 100, which is out of bounds." verbose="Array &apos;cCommand[100]&apos; accessed at index 100, which is out of bounds." cwe="788">
+            <location file="L2R_01/convert.c" line="772" info="Array index out of bounds"/>
+            <location file="L2R_01/convert.c" line="748" info="After for loop, i has value 100"/>
+        </error>
+        <error id="arrayIndexOutOfBounds" severity="error" msg="Array &apos;s[50]&apos; accessed at index 50, which is out of bounds." verbose="Array &apos;s[50]&apos; accessed at index 50, which is out of bounds." cwe="788">
+            <location file="L2R_01/parser.c" line="282" info="Array index out of bounds"/>
+        </error>
+        <error id="arrayIndexOutOfBounds" severity="error" msg="Array &apos;command[35]&apos; accessed at index 35, which is out of bounds." verbose="Array &apos;command[35]&apos; accessed at index 35, which is out of bounds." cwe="788">
+            <location file="L2R_01/parser.c" line="1217" info="Array index out of bounds"/>
+            <location file="L2R_01/parser.c" line="1208" info="After for loop, i has value 35"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: tab" verbose="Uninitialized variable: tab" cwe="908">
+            <location file="L2R_01/tables.c" line="207"/>
+            <symbol>tab</symbol>
+        </error>
+        <error id="resourceLeak" severity="error" msg="Resource leak: m_file" verbose="Resource leak: m_file" cwe="775">
+            <location file="OPENCV_00_01/a.c" line="39"/>
+            <symbol>m_file</symbol>
+        </error>
+        <error id="resourceLeak" severity="error" msg="Resource leak: m_file" verbose="Resource leak: m_file" cwe="775">
+            <location file="OPENCV_00_03/a.c" line="41"/>
+            <symbol>m_file</symbol>
+        </error>
+        <error id="resourceLeak" severity="error" msg="Resource leak: m_file" verbose="Resource leak: m_file" cwe="775">
+            <location file="OPENCV_00_basic/a.c" line="39"/>
+            <symbol>m_file</symbol>
+        </error>
+    </errors>
+</results>

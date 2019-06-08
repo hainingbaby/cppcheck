@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results version="2">
+    <cppcheck version="1.88 dev"/>
+    <errors>
+        <error id="insecureCmdLineArgs" severity="error" msg="Buffer overrun possible for long command line arguments." verbose="Buffer overrun possible for long command line arguments." cwe="119">
+            <location file="FTPD_01/call_fb_realpath.c" line="17"/>
+        </error>
+        <error id="insecureCmdLineArgs" severity="error" msg="Buffer overrun possible for long command line arguments." verbose="Buffer overrun possible for long command line arguments." cwe="119">
+            <location file="FTPD_01_01/call_fb_realpath.c" line="17"/>
+        </error>
+        <error id="arrayIndexOutOfBounds" severity="error" msg="Array &apos;cCommand[100]&apos; accessed at index 100, which is out of bounds." verbose="Array &apos;cCommand[100]&apos; accessed at index 100, which is out of bounds." cwe="119">
+            <location file="L2R_01/convert.c" line="772" info="Array index out of bounds"/>
+            <location file="L2R_01/convert.c" line="748" info="After for loop, i has value 100"/>
+            <symbol>cCommand</symbol>
+        </error>
+        <error id="arrayIndexOutOfBounds" severity="error" msg="Array &apos;s[50]&apos; accessed at index 50, which is out of bounds." verbose="Array &apos;s[50]&apos; accessed at index 50, which is out of bounds." cwe="119">
+            <location file="L2R_01/parser.c" line="282" info="Array index out of bounds"/>
+            <symbol>s</symbol>
+        </error>
+        <error id="arrayIndexOutOfBounds" severity="error" msg="Array &apos;command[35]&apos; accessed at index 35, which is out of bounds." verbose="Array &apos;command[35]&apos; accessed at index 35, which is out of bounds." cwe="119">
+            <location file="L2R_01/parser.c" line="1217" info="Array index out of bounds"/>
+            <location file="L2R_01/parser.c" line="1208" info="After for loop, i has value 35"/>
+            <symbol>command</symbol>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: tab" verbose="Uninitialized variable: tab" cwe="908">
+            <location file="L2R_01/tables.c" line="207"/>
+            <symbol>tab</symbol>
+        </error>
+        <error id="resourceLeak" severity="error" msg="Resource leak: m_file" verbose="Resource leak: m_file" cwe="775">
+            <location file="OPENCV_00_01/a.c" line="39"/>
+            <symbol>m_file</symbol>
+        </error>
+        <error id="resourceLeak" severity="error" msg="Resource leak: m_file" verbose="Resource leak: m_file" cwe="775">
+            <location file="OPENCV_00_03/a.c" line="41"/>
+            <symbol>m_file</symbol>
+        </error>
+        <error id="resourceLeak" severity="error" msg="Resource leak: m_file" verbose="Resource leak: m_file" cwe="775">
+            <location file="OPENCV_00_basic/a.c" line="39"/>
+            <symbol>m_file</symbol>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/alloc.cpp" file="OPENCV_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/alloc.cpp" file="OPENCV_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/alloc.cpp" file="OPENCV_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01/alloc.cpp" file="OPENCV_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/bitstrm.cpp" file="OPENCV_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/bitstrm.cpp" file="OPENCV_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/bitstrm.cpp" file="OPENCV_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01/bitstrm.cpp" file="OPENCV_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/grfmt_base.cpp" file="OPENCV_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/grfmt_base.cpp" file="OPENCV_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/grfmt_base.cpp" file="OPENCV_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01/grfmt_base.cpp" file="OPENCV_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/grfmt_bmp.cpp" file="OPENCV_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/grfmt_bmp.cpp" file="OPENCV_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/grfmt_bmp.cpp" file="OPENCV_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01/grfmt_bmp.cpp" file="OPENCV_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/grfmt_hdr.cpp" file="OPENCV_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/grfmt_hdr.cpp" file="OPENCV_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/grfmt_hdr.cpp" file="OPENCV_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01/grfmt_hdr.cpp" file="OPENCV_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/loadsave.cpp" file="OPENCV_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/loadsave.cpp" file="OPENCV_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/loadsave.cpp" file="OPENCV_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01/loadsave.cpp" file="OPENCV_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/stl.cpp" file="OPENCV_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/stl.cpp" file="OPENCV_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/stl.cpp" file="OPENCV_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01/stl.cpp" file="OPENCV_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/test.cpp" file="OPENCV_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/test.cpp" file="OPENCV_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/test.cpp" file="OPENCV_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01/test.cpp" file="OPENCV_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/utils.cpp" file="OPENCV_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/utils.cpp" file="OPENCV_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01/utils.cpp" file="OPENCV_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01/utils.cpp" file="OPENCV_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/alloc.cpp" file="OPENCV_01_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/alloc.cpp" file="OPENCV_01_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/alloc.cpp" file="OPENCV_01_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01_01/alloc.cpp" file="OPENCV_01_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/bitstrm.cpp" file="OPENCV_01_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/bitstrm.cpp" file="OPENCV_01_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/bitstrm.cpp" file="OPENCV_01_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01_01/bitstrm.cpp" file="OPENCV_01_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/grfmt_base.cpp" file="OPENCV_01_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/grfmt_base.cpp" file="OPENCV_01_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/grfmt_base.cpp" file="OPENCV_01_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01_01/grfmt_base.cpp" file="OPENCV_01_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/grfmt_bmp.cpp" file="OPENCV_01_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/grfmt_bmp.cpp" file="OPENCV_01_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/grfmt_bmp.cpp" file="OPENCV_01_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01_01/grfmt_bmp.cpp" file="OPENCV_01_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/grfmt_hdr.cpp" file="OPENCV_01_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/grfmt_hdr.cpp" file="OPENCV_01_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/grfmt_hdr.cpp" file="OPENCV_01_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01_01/grfmt_hdr.cpp" file="OPENCV_01_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/loadsave.cpp" file="OPENCV_01_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/loadsave.cpp" file="OPENCV_01_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/loadsave.cpp" file="OPENCV_01_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01_01/loadsave.cpp" file="OPENCV_01_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/stl.cpp" file="OPENCV_01_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/stl.cpp" file="OPENCV_01_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/stl.cpp" file="OPENCV_01_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01_01/stl.cpp" file="OPENCV_01_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/test.cpp" file="OPENCV_01_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/test.cpp" file="OPENCV_01_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/test.cpp" file="OPENCV_01_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01_01/test.cpp" file="OPENCV_01_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/utils.cpp" file="OPENCV_01_01/cvstd.hpp" line="782"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/utils.cpp" file="OPENCV_01_01/cvstd.hpp" line="793"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;lhs&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file0="OPENCV_01_01/utils.cpp" file="OPENCV_01_01/cvstd.hpp" line="814"/>
+        </error>
+        <error id="MemoryNoFree" severity="error" msg="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures." verbose="The &apos; str &apos; has been allocated but not free, which allows attackers to cause a denial of service (memory consumption) by triggering object-initialization failures.">
+            <location file0="OPENCV_01_01/utils.cpp" file="OPENCV_01_01/cvstd.hpp" line="455"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;len&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;len&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="OSSL_00_02/a.c" line="25"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;len&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;len&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="OSSL_00_basic/a.c" line="29"/>
+        </error>
+        <error id="memleak" severity="error" msg="Memory leak: ssl" verbose="Memory leak: ssl" cwe="401">
+            <location file="OSSL_01/ssl_lib.c" line="37"/>
+            <symbol>ssl</symbol>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;payload&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;payload&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="OSSL_01/t1_lib.c" line="27"/>
+        </error>
+        <error id="memleak" severity="error" msg="Memory leak: ssl" verbose="Memory leak: ssl" cwe="401">
+            <location file="OSSL_02/ssl_lib.c" line="17"/>
+            <symbol>ssl</symbol>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;payload&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;payload&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="OSSL_02/t1_lib.c" line="27"/>
+        </error>
+        <error id="memleak" severity="error" msg="Memory leak: ssl" verbose="Memory leak: ssl" cwe="401">
+            <location file="OSSL_02_01/ssl_lib.c" line="17"/>
+            <symbol>ssl</symbol>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;payload&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;payload&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="OSSL_02_01/t1_lib.c" line="34"/>
+        </error>
+        <error id="memleak" severity="error" msg="Memory leak: rrec_data" verbose="Memory leak: rrec_data" cwe="401">
+            <location file="OSSL_03/s3_pkt.c" line="95"/>
+            <symbol>rrec_data</symbol>
+        </error>
+        <error id="memleak" severity="error" msg="Memory leak: ssl" verbose="Memory leak: ssl" cwe="401">
+            <location file="OSSL_03/ssl_lib.c" line="17"/>
+            <symbol>ssl</symbol>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;payload&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;payload&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="OSSL_03/t1_lib.c" line="21"/>
+        </error>
+        <error id="memleak" severity="error" msg="Memory leak: rrec_data" verbose="Memory leak: rrec_data" cwe="401">
+            <location file="OSSL_04/s3_pkt.c" line="96"/>
+            <symbol>rrec_data</symbol>
+        </error>
+        <error id="memleak" severity="error" msg="Memory leak: ssl" verbose="Memory leak: ssl" cwe="401">
+            <location file="OSSL_04/ssl_lib.c" line="17"/>
+            <symbol>ssl</symbol>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;payload&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;payload&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="OSSL_04/t1_lib.c" line="21"/>
+        </error>
+        <error id="BUFFER_OVERFLOW" severity="error" msg="BufferOverFlow. The third parameter: &apos;payload&apos; should clarify its lenth to avoid problems" verbose="BufferOverFlow. The third parameter: &apos;payload&apos; should clarify its lenth to avoid problems" cwe="398">
+            <location file="OSSL_05/s3_pkt.c" line="54"/>
+        </error>
+    </errors>
+</results>
